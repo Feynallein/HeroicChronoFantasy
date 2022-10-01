@@ -24,7 +24,18 @@
     }
 
     public class GameStatisticsChangedEvent : SDD.Events.Event {
-        //Todo: add statistics
+        public int eShape { get; set; }
+        public int eKnowledge { get; set; }
+        public int eScience { get; set; }
+        public int eSocial { get; set; }
+    }
+
+    public class PointGainedEvent : SDD.Events.Event {
+
+    }
+
+    public class PointLostEvent : SDD.Events.Event {
+
     }
     #endregion
 

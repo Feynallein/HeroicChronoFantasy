@@ -11,6 +11,17 @@ namespace EventsManager {
     public class GameManager : Manager<GameManager> {
         //Todo: add music & sfx callbacks
 
+        private List<Skill> _Skills = new() {
+            new Skill("Shape"),
+            new Skill("Knowledge"),
+            new Skill("Science"),
+            new Skill("Social"),
+        };
+
+        private int _CurrentPoints = 0;
+
+        public int CurrentPoints { get { return _CurrentPoints; } }
+
         #region Game State
         private GameState _GameState;
         public bool IsPlaying { get { return _GameState == GameState.gamePlay; } }
@@ -34,6 +45,9 @@ namespace EventsManager {
             EventManager.Instance.AddListener<ResumeButtonClickedEvent>(ResumeButtonClicked);
             EventManager.Instance.AddListener<EscapeButtonClickedEvent>(EscapeButtonClicked);
             EventManager.Instance.AddListener<QuitButtonClickedEvent>(QuitButtonClicked);
+
+            EventManager.Instance.AddListener<PointGainedEvent>(PointGained);
+            EventManager.Instance.AddListener<PointLostEvent>(PointLost);
         }
 
         public override void UnsubscribeEvents() {
@@ -43,8 +57,12 @@ namespace EventsManager {
             EventManager.Instance.RemoveListener<MainMenuButtonClickedEvent>(MainMenuButtonClicked);
             EventManager.Instance.RemoveListener<PlayButtonClickedEvent>(PlayButtonClicked);
             EventManager.Instance.RemoveListener<ResumeButtonClickedEvent>(ResumeButtonClicked);
+            EventManager.Instance.RemoveListener<ResumeButtonClickedEvent>(ResumeButtonClicked);
             EventManager.Instance.RemoveListener<EscapeButtonClickedEvent>(EscapeButtonClicked);
             EventManager.Instance.RemoveListener<QuitButtonClickedEvent>(QuitButtonClicked);
+
+            EventManager.Instance.RemoveListener<PointGainedEvent>(PointGained);
+            EventManager.Instance.RemoveListener<PointLostEvent>(PointLost);
         }
         #endregion
 
@@ -57,6 +75,26 @@ namespace EventsManager {
 
         void SetTimeScale(float newTimeScale) {
             Time.timeScale = newTimeScale;
+        }
+
+        public void IncreaseSkill(string skill) {
+            switch(skill) {
+                case "Shape": 
+                    _Skills[0].IncrementValue(1); 
+                    break;
+                case "Knowledge": 
+                    _Skills[1].IncrementValue(1);
+                    break;
+                case "Science": 
+                    _Skills[2].IncrementValue(1);
+                    break;
+                case "Social":
+                    _Skills[3].IncrementValue(1);
+                    break;
+                default: break;
+            }
+            EventManager.Instance.Raise(new PointLostEvent());
+            EventManager.Instance.Raise(new GameStatisticsChangedEvent { eShape = _Skills[0].Value, eKnowledge = _Skills[1].Value, eScience = _Skills[2].Value, eSocial = _Skills[3].Value });
         }
         #endregion
 
@@ -82,6 +120,14 @@ namespace EventsManager {
         private void QuitButtonClicked(QuitButtonClickedEvent e) {
             Application.Quit();
         }
+
+        private void PointGained(PointGainedEvent e) {
+            _CurrentPoints++;
+        }
+
+        private void PointLost(PointLostEvent e) {
+            _CurrentPoints--;
+        }
         #endregion
 
         #region GameState methode
@@ -95,6 +141,7 @@ namespace EventsManager {
         private void Play() {
             SetTimeScale(1);
             _GameState = GameState.gamePlay;
+            EventManager.Instance.Raise(new GameStatisticsChangedEvent { eShape = _Skills[0].Value, eKnowledge = _Skills[1].Value, eScience = _Skills[2].Value, eSocial = _Skills[3].Value });
             EventManager.Instance.Raise(new GamePlayEvent());
         }
 

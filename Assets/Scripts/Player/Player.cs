@@ -1,3 +1,4 @@
+using EventsManager;
 using Redcode.Extensions;
 using System.Collections;
 using System.Collections.Generic;
@@ -5,6 +6,9 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
+using static Jobs;
+using static Skill;
+using SDD.Events;
 
 public class Player : MonoBehaviour {
     [SerializeField] private List<Transform> _Targets = new();
@@ -47,11 +51,22 @@ public class Player : MonoBehaviour {
 
         if(_DestinationReached) _ElapsedTime += Time.deltaTime;
 
+        // For debugging purpose
+        if (Mouse.current.rightButton.wasPressedThisFrame) Die();
+        if (Keyboard.current.spaceKey.wasPressedThisFrame) EventManager.Instance.Raise(new PointGainedEvent());
     }
 
     private void ChangeTarget(Vector3 target) {
         _Agent.SetDestination(target);
         _DestinationReached = false;
         _ElapsedTime = 0;
+    }
+
+    private Job Die() {
+        string str = "";
+
+        //_Skills.ForEach(value => str += value.GetRangeToString());
+
+        return ConvertRangeSkillStringToJob(str);
     }
 }
