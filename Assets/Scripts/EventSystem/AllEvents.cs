@@ -37,10 +37,6 @@
     public class PointLostEvent : SDD.Events.Event {
 
     }
-
-    public class JobPopupEvent : SDD.Events.Event {
-        public string eJob { get; set; }
-    }
     #endregion
 
     #region MenuManager Events

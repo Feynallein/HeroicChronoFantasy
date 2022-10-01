@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class MiniGame : MonoBehaviour {
     [SerializeField] private float _Duration;
-    [SerializeField] private Image _Image;
 
     private float _ElapsedTime;
 
@@ -14,9 +13,8 @@ public class MiniGame : MonoBehaviour {
     }
 
     protected virtual void Update() {
-        print(_ElapsedTime);
         if (_ElapsedTime >= _Duration) {
-            MiniGameManager.Instance.MiniGameCallback(false);
-        } else _ElapsedTime += Time.deltaTime;
+            LevelManager.Instance.MiniGameCallback(false);
+        } else _ElapsedTime += Time.unscaledDeltaTime;
     }
 }

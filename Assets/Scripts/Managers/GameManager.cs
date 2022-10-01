@@ -1,17 +1,24 @@
 namespace EventsManager {
     using System.Collections;
     using UnityEngine;
-    using UnityEngine.UI;
     using System.Collections.Generic;
     using SDD.Events;
-    using System.Linq;
-    using static Jobs;
-    using static Skill;
+    using UnityEngine.InputSystem;
 
-    public enum GameState { gameMenu, gamePlay, initializingLevel, gamePause, gameOver, gameVictory}
+    public enum GameState { gameMenu, gamePlay, initializingLevel, gamePause, gameOver}
 
     public class GameManager : Manager<GameManager> {
-        [SerializeField] private int _MiddleAge;
+        #region Game State
+        private GameState _GameState;
+        public bool IsPlaying { get { return _GameState == GameState.gamePlay; } }
+
+        public bool IsInMainMenu { get { return _GameState == GameState.gameMenu; } }
+
+        public bool IsPausing { get { return _GameState == GameState.gamePause; } }
+
+        public bool IsGameOver { get { return _GameState == GameState.gameOver; } }
+        #endregion
+
         [SerializeField] private int _MaxHealth;
 
         private List<Skill> _Skills = new() {
@@ -21,31 +28,24 @@ namespace EventsManager {
             new Skill("Social"),
         };
 
-        private int _Age;
-
         private int _CurrentPoints = 0;
 
         private int _Health;
+
+        private int _Wave = 0;
+
+        public int Wave { get { return _Wave; } }
+
+        public int CurrentPoints { get { return _CurrentPoints; } }
+
+        public void AddWave() {
+            _Wave++;
+        }
 
         public void DecrementHealth(int decrement) {
             _Health -= decrement;
             if (_Health <= 0) EventManager.Instance.Raise(new GameOverEvent());
         }
-
-        public int CurrentPoints { get { return _CurrentPoints; } }
-
-        #region Game State
-        private GameState _GameState;
-        public bool IsPlaying { get { return _GameState == GameState.gamePlay; } }
-
-        public bool IsInMainMenu { get { return _GameState == GameState.gameMenu; } }
-
-        public bool IsPausing { get { return _GameState == GameState.gamePause; } }
-
-        public bool IsVictory { get { return _GameState == GameState.gameVictory; } }
-
-        public bool IsGameOver { get { return _GameState == GameState.gameOver; } }
-        #endregion
 
         #region Events' subscription
         public override void SubscribeEvents() {
@@ -85,22 +85,15 @@ namespace EventsManager {
             yield break;
         }
 
+        private void Update() {
+            if (Keyboard.current.escapeKey.wasPressedThisFrame) {
+                if (IsPausing) Resume();
+                else Pause();
+            }
+        }
+
         public void SetTimeScale(float newTimeScale) {
             Time.timeScale = newTimeScale;
-        }
-
-        private void Update() {
-            if (_Age == _MiddleAge) PopupJob();
-        }
-
-        private void PopupJob() {
-            string str = "";
-
-            _Skills.ForEach(value => str += value.GetRangeToString());
-
-            Job job = ConvertRangeSkillStringToJob(str);
-            SetTimeScale(0);
-            EventManager.Instance.Raise(new JobPopupEvent() { eJob = JobToString(job) });
         }
 
         public void IncreaseSkill(string skill) {
@@ -126,7 +119,7 @@ namespace EventsManager {
 
         #region Callbacks to Events issued by MenuManager
         private void MainMenuButtonClicked(MainMenuButtonClickedEvent e) {
-            if (IsPausing || IsVictory || IsGameOver) Menu();
+            if (IsPausing || IsGameOver) Menu();
         }
 
         private void PlayButtonClicked(PlayButtonClickedEvent e) {
@@ -149,7 +142,6 @@ namespace EventsManager {
 
         private void PointGained(PointGainedEvent e) {
             _CurrentPoints++;
-            _Age++;
         }
 
         private void PointLost(PointLostEvent e) {
@@ -191,12 +183,6 @@ namespace EventsManager {
             SetTimeScale(0);
             _GameState = GameState.gameOver;
             EventManager.Instance.Raise(new GameOverEvent());
-        }
-
-        public void Victory() {
-            SetTimeScale(0);
-            _GameState = GameState.gameVictory;
-            EventManager.Instance.Raise(new GameVictoryEvent());
         }
         #endregion
     }

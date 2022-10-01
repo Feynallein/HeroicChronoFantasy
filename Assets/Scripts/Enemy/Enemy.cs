@@ -7,17 +7,19 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
 using SDD.Events;
+using UnityEngine.UIElements;
 
-public class Player : MonoBehaviour {
-    [SerializeField] private List<Transform> _Targets = new();
+public class Enemy : MonoBehaviour {
+    [SerializeField] private float _MinDistance;
     [SerializeField] private float _MinWait;
     [SerializeField] private float _MaxWait;
 
     private NavMeshAgent _Agent;
     private bool _DestinationReached = false;
-    private int _CurrentTargetIndex;
     private float _ElapsedTime;
     private float _WaitingTime;
+    private Vector3 _TopLeftBound;
+    private Vector3 _BottomRightBound;
 
     void Start() {
         _Agent = GetComponent<NavMeshAgent>();
@@ -25,13 +27,12 @@ public class Player : MonoBehaviour {
         _Agent.updateUpAxis = false;
     }
 
-    void Update() {
-        if(Mouse.current.leftButton.wasPressedThisFrame) { //todo: check if mouse isn't out of the house
-            Vector3 mousePosition = Mouse.current.position.ReadValue();
-            Vector3 target = Camera.main.ScreenToWorldPoint(mousePosition.WithZ(10));
-            ChangeTarget(target);
-        }
+    public void SetBounds(Vector3 topLeft, Vector3 bottomRight) {
+        _TopLeftBound = topLeft;
+        _BottomRightBound = bottomRight;
+    }
 
+    void Update() {
         if (!_Agent.pathPending && !_DestinationReached) {
             if (_Agent.remainingDistance <= _Agent.stoppingDistance) {
                 if (!_Agent.hasPath || _Agent.velocity.sqrMagnitude == 0f) {
@@ -42,15 +43,17 @@ public class Player : MonoBehaviour {
         }
 
         if(_ElapsedTime >= _WaitingTime && _DestinationReached) {
-            _CurrentTargetIndex = Random.Range(0, _Targets.Count);
-            ChangeTarget(_Targets[_CurrentTargetIndex].position);
+            Vector3 dest = new();
+            do {
+                float x = Random.Range(_TopLeftBound.x, _BottomRightBound.x);
+                float y = Random.Range(_TopLeftBound.y, _BottomRightBound.y);
+                dest = new Vector3(x, y, 0);
+            } while (Vector3.Distance(dest, transform.position) < _MinDistance);
+            ChangeTarget(dest);
             _ElapsedTime = 0;
         }
 
         if(_DestinationReached) _ElapsedTime += Time.deltaTime;
-
-        // For debugging purpose
-        if (Keyboard.current.spaceKey.wasPressedThisFrame) EventManager.Instance.Raise(new PointGainedEvent());
     }
 
     private void ChangeTarget(Vector3 target) {

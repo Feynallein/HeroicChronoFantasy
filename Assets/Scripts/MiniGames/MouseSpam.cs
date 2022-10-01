@@ -15,7 +15,7 @@ public class MouseSpam : MiniGame {
     protected override void Update() {
         base.Update();
 
-        if (_NumberOfClicks >= _NumberOfClickNeeded) MiniGameManager.Instance.MiniGameCallback(true);
+        if (_NumberOfClicks >= _NumberOfClickNeeded) LevelManager.Instance.MiniGameCallback(true);
     }
 
     public void ButtonCallback() {
