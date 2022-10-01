@@ -1,0 +1,68 @@
+﻿Shader "Raivk/ScreenBordersBlur"
+{
+	HLSLINCLUDE
+
+#include "Packages/com.unity.postprocessing/PostProcessing/Shaders/StdLib.hlsl"
+
+		TEXTURE2D_SAMPLER2D(_MainTex, sampler_MainTex);
+	float4 _MainTex_TexelSize;
+	int _KernelSize;
+	float _Spread;
+
+	float gaussian(int x, float sigma)
+	{
+		float sigmaSqu = sigma * sigma;
+		return (1 / sqrt(6.28319 * sigmaSqu)) * pow(2.71828, -(x * x) / (2 * sigmaSqu));
+	}
+
+	float getSigma(float2 uv)
+	{
+		float distance = sqrt(pow(abs(uv.x - 0.5) * 2, 2) + pow(abs(uv.y - 0.5) * 2, 2));
+		return min(distance * 1.25, 1.0);
+	}
+
+	float4 Frag(VaryingsDefault i) : SV_Target
+	{
+		float3 color = float3(0.0, 0.0, 0.0);
+
+		int upper = ((_KernelSize - 1) / 2);
+		int lower = -upper;
+
+		float sigma = getSigma(i.texcoord) * _Spread;
+
+		float kernelSum = 0.0;
+
+		for (int x = lower; x <= upper; ++x)
+		{
+			for (int y = lower; y <= upper; ++y)
+			{
+				float gauss = gaussian(x, sigma);
+				kernelSum += gauss;
+
+				float2 offset = float2(_MainTex_TexelSize.x * x, _MainTex_TexelSize.y * y);
+				color += gauss * SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, i.texcoord + offset);
+			}
+		}
+
+		color /= kernelSum;
+
+		return float4(color, 1.0f);
+	}
+
+		ENDHLSL
+
+		SubShader
+	{
+		Cull Off ZWrite Off ZTest Always
+
+			Pass
+		{
+			HLSLPROGRAM
+
+				#pragma vertex VertDefault
+				#pragma fragment Frag
+
+			ENDHLSL
+		}
+	}
+}
