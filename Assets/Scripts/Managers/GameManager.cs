@@ -50,7 +50,8 @@ namespace EventsManager {
 
         #region Manager implementation
         protected override IEnumerator InitCoroutine() {
-            Menu();
+            //Menu();
+            Play();
             yield break;
         }
 
