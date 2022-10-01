@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Skill {
-    public static int MAX_LOW = 14;
-    public static int MAX_MED = 34;
+    public static int MAX_LOW = 1;
+    public static int MAX_MED = 4;
 
     public enum SkillRange {
         low,
@@ -29,8 +29,8 @@ public class Skill {
     }
 
     public string GetRangeToString() {
-        if (_Value < MAX_LOW) return "low";
-        if (_Value < MAX_MED) return "med";
+        if (_Value <= MAX_LOW) return "low";
+        if (_Value <= MAX_MED) return "med";
         else return "high";
     }
 }

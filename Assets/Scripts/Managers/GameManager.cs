@@ -5,11 +5,14 @@ namespace EventsManager {
     using System.Collections.Generic;
     using SDD.Events;
     using System.Linq;
+    using static Jobs;
+    using static Skill;
 
     public enum GameState { gameMenu, gamePlay, initializingLevel, gamePause, gameOver, gameVictory}
 
     public class GameManager : Manager<GameManager> {
-        //Todo: add music & sfx callbacks
+        [SerializeField] private int _MiddleAge;
+        [SerializeField] private int _MaxHealth;
 
         private List<Skill> _Skills = new() {
             new Skill("Shape"),
@@ -18,7 +21,16 @@ namespace EventsManager {
             new Skill("Social"),
         };
 
+        private int _Age;
+
         private int _CurrentPoints = 0;
+
+        private int _Health;
+
+        public void DecrementHealth(int decrement) {
+            _Health -= decrement;
+            if (_Health <= 0) EventManager.Instance.Raise(new GameOverEvent());
+        }
 
         public int CurrentPoints { get { return _CurrentPoints; } }
 
@@ -73,8 +85,22 @@ namespace EventsManager {
             yield break;
         }
 
-        void SetTimeScale(float newTimeScale) {
+        public void SetTimeScale(float newTimeScale) {
             Time.timeScale = newTimeScale;
+        }
+
+        private void Update() {
+            if (_Age == _MiddleAge) PopupJob();
+        }
+
+        private void PopupJob() {
+            string str = "";
+
+            _Skills.ForEach(value => str += value.GetRangeToString());
+
+            Job job = ConvertRangeSkillStringToJob(str);
+            SetTimeScale(0);
+            EventManager.Instance.Raise(new JobPopupEvent() { eJob = JobToString(job) });
         }
 
         public void IncreaseSkill(string skill) {
@@ -123,6 +149,7 @@ namespace EventsManager {
 
         private void PointGained(PointGainedEvent e) {
             _CurrentPoints++;
+            _Age++;
         }
 
         private void PointLost(PointLostEvent e) {

@@ -14,6 +14,8 @@
         [SerializeField] List<Text> _HUDSkills = new();
         [SerializeField] List<GameObject> _HUDSkillsButtons = new();
         [SerializeField] Text _CurrentPointsHUD;
+        [SerializeField] GameObject _JobPopup;
+        [SerializeField] GameObject _LeftPanel;
 
         List<string> _HUDSkillsBaseText = new();
 
@@ -32,12 +34,25 @@
             base.SubscribeEvents();
             EventManager.Instance.AddListener<PointGainedEvent>(PointGained);
             EventManager.Instance.AddListener<PointLostEvent>(PointLost);
+            EventManager.Instance.AddListener<JobPopupEvent>(JobPopup);
         }
 
         public override void UnsubscribeEvents() {
             base.UnsubscribeEvents();
             EventManager.Instance.RemoveListener<PointGainedEvent>(PointGained);
             EventManager.Instance.RemoveListener<PointLostEvent>(PointLost);
+            EventManager.Instance.RemoveListener<JobPopupEvent>(JobPopup);
+        }
+
+        private void JobPopup(JobPopupEvent e) {
+            _JobPopup.GetComponentInChildren<Text>().text += e.eJob;
+            _JobPopup.SetActive(true);
+            _LeftPanel.SetActive(false);
+        }
+
+        public void JobPopupButtonClicked() {
+            _JobPopup.SetActive(false);
+            Time.timeScale = 1;
         }
 
         private void ShowButtons(bool value) {
