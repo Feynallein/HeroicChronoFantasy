@@ -5,6 +5,7 @@ namespace EventsManager {
     using UnityEngine;
     using SDD.Events;
     using UnityEngine.UI;
+    using TMPro;
 
     public class MenuManager : Manager<MenuManager> {
         #region Variables
@@ -17,6 +18,8 @@ namespace EventsManager {
 
         [Tooltip("Panel displayed when game over")]
         [SerializeField] GameObject _GameOverPanel;
+
+        [SerializeField] private TextMeshProUGUI _GameOverStats;
 
         List<GameObject> _AllPanels;
         #endregion
@@ -65,6 +68,14 @@ namespace EventsManager {
             EventManager.Instance.Raise(new QuitButtonClickedEvent());
         }
 
+        public void PlayButtonHasBeenClicked() {
+            EventManager.Instance.Raise(new PlayButtonClickedEvent());
+        }
+
+        public void MainMenuButtonHasBeenClicked() {
+            EventManager.Instance.Raise(new MainMenuButtonClickedEvent());
+        }
+
         public void ReturnToMainMenuFromMenu() {
             OpenPanel(_MainMenuPanel);
         }
@@ -90,6 +101,7 @@ namespace EventsManager {
 
         protected override void GameOver(GameOverEvent e) {
             OpenPanel(_GameOverPanel);
+            _GameOverStats.text = "Enemies killed: " + GameManager.Instance.GetTotalPoint();
         }
         #endregion
     }

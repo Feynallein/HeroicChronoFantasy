@@ -1,4 +1,4 @@
-namespace EventsManager {
+    namespace EventsManager {
     using System.Collections;
     using UnityEngine;
     using System.Collections.Generic;
@@ -80,8 +80,7 @@ namespace EventsManager {
 
         #region Manager implementation
         protected override IEnumerator InitCoroutine() {
-            //Menu();
-            Play();
+            Menu();
             yield break;
         }
 
@@ -95,7 +94,7 @@ namespace EventsManager {
         }
 
         public string GetClass() {
-            int total = _Skills.Sum();
+            int total = GetTotalPoint();
 
             if (total == 0) return Jobs.JobToString(Jobs.ConvertRangeSkillStringToJob("lowlowlow"));
 
@@ -106,6 +105,10 @@ namespace EventsManager {
             string query = ComputeQuery(strPercentage, intPercentage, dexPercentage, total);
 
             return Jobs.JobToString(Jobs.ConvertRangeSkillStringToJob(query));
+        }
+
+        public int GetTotalPoint() {
+            return _Skills.Sum();
         }
 
         private string ComputeQuery(float strPercentage, float intPercentage, float dexPercentage, float total) {
@@ -200,6 +203,9 @@ namespace EventsManager {
             SetTimeScale(1);
             _GameState = GameState.gamePlay;
             _Health = _MaxHealth;
+            _Skills = new() { 0, 0, 0};
+            _Wave = 0;
+            _CurrentPoints = 0;
             EventManager.Instance.Raise(new GameStatisticsChangedEvent { eStr = _Skills[0], eInt = _Skills[1], eDex = _Skills[2], eHealth = _Health });
             EventManager.Instance.Raise(new GamePlayEvent());
         }

@@ -76,6 +76,7 @@ public class LevelManager : Manager<LevelManager> {
 
     protected override void GameOver(GameOverEvent e) {
         _Start = false;
+        _Spawners.ForEach(spawner => spawner.Despawn());
     }
 
     protected override void GamePlay(GamePlayEvent e) {
