@@ -1,16 +1,14 @@
 namespace EventsManager {
     using System.Collections;
     using UnityEngine;
-    using UnityEngine.UI;
     using System.Collections.Generic;
     using SDD.Events;
+    using UnityEngine.InputSystem;
     using System.Linq;
 
-    public enum GameState { gameMenu, gamePlay, initializingLevel, gamePause, gameOver, gameVictory}
+    public enum GameState { gameMenu, gamePlay, initializingLevel, gamePause, gameOver}
 
     public class GameManager : Manager<GameManager> {
-        //Todo: add music & sfx callbacks
-
         #region Game State
         private GameState _GameState;
         public bool IsPlaying { get { return _GameState == GameState.gamePlay; } }
@@ -19,10 +17,31 @@ namespace EventsManager {
 
         public bool IsPausing { get { return _GameState == GameState.gamePause; } }
 
-        public bool IsVictory { get { return _GameState == GameState.gameVictory; } }
-
         public bool IsGameOver { get { return _GameState == GameState.gameOver; } }
         #endregion
+
+        [SerializeField] private int _MaxHealth;
+
+        private List<int> _Skills = new() { 0, 0, 0 };
+
+        private int _CurrentPoints = 0;
+
+        private int _Health;
+
+        private int _Wave = 0;
+
+        public int Wave { get { return _Wave; } }
+
+        public int CurrentPoints { get { return _CurrentPoints; } }
+
+        public void AddWave() {
+            _Wave++;
+        }
+
+        public void DecrementHealth(int decrement) {
+            _Health -= decrement;
+            if (_Health <= 0) EventManager.Instance.Raise(new GameOverEvent());
+        }
 
         #region Events' subscription
         public override void SubscribeEvents() {
@@ -34,6 +53,9 @@ namespace EventsManager {
             EventManager.Instance.AddListener<ResumeButtonClickedEvent>(ResumeButtonClicked);
             EventManager.Instance.AddListener<EscapeButtonClickedEvent>(EscapeButtonClicked);
             EventManager.Instance.AddListener<QuitButtonClickedEvent>(QuitButtonClicked);
+
+            EventManager.Instance.AddListener<PointGainedEvent>(PointGained);
+            EventManager.Instance.AddListener<PointLostEvent>(PointLost);
         }
 
         public override void UnsubscribeEvents() {
@@ -43,25 +65,96 @@ namespace EventsManager {
             EventManager.Instance.RemoveListener<MainMenuButtonClickedEvent>(MainMenuButtonClicked);
             EventManager.Instance.RemoveListener<PlayButtonClickedEvent>(PlayButtonClicked);
             EventManager.Instance.RemoveListener<ResumeButtonClickedEvent>(ResumeButtonClicked);
+            EventManager.Instance.RemoveListener<ResumeButtonClickedEvent>(ResumeButtonClicked);
             EventManager.Instance.RemoveListener<EscapeButtonClickedEvent>(EscapeButtonClicked);
             EventManager.Instance.RemoveListener<QuitButtonClickedEvent>(QuitButtonClicked);
+
+            EventManager.Instance.RemoveListener<PointGainedEvent>(PointGained);
+            EventManager.Instance.RemoveListener<PointLostEvent>(PointLost);
         }
         #endregion
 
         #region Manager implementation
         protected override IEnumerator InitCoroutine() {
-            Menu();
+            //Menu();
+            Play();
             yield break;
         }
 
-        void SetTimeScale(float newTimeScale) {
+        private void Update() {
+            if (Keyboard.current.escapeKey.wasPressedThisFrame) {
+                if (IsPausing) Resume();
+                else Pause();
+            }
+
+            if (Keyboard.current.spaceKey.wasPressedThisFrame) EventManager.Instance.Raise(new PointGainedEvent());
+        }
+
+        public string GetClass() {
+            int total = _Skills.Sum();
+
+            if (total == 0) return Jobs.JobToString(Jobs.ConvertRangeSkillStringToJob("lowlowlow"));
+
+            float strPercentage = (_Skills[0] * 100) / total;
+            float intPercentage = (_Skills[1] * 100) / total;
+            float dexPercentage = (_Skills[2] * 100) / total;
+
+            string query = ComputeQuery(strPercentage, intPercentage, dexPercentage, total);
+
+            return Jobs.JobToString(Jobs.ConvertRangeSkillStringToJob(query));
+        }
+
+        private string ComputeQuery(float strPercentage, float intPercentage, float dexPercentage, float total) {
+
+            if (strPercentage == intPercentage && intPercentage == dexPercentage) return "medmedmed";
+
+            if (strPercentage == intPercentage && strPercentage != 0 && strPercentage > dexPercentage) return "medmedlow";
+            if (strPercentage == dexPercentage && strPercentage != 0 && strPercentage > intPercentage) return "medlowmed";
+            if (intPercentage == dexPercentage && intPercentage != 0 && intPercentage > strPercentage) return "lowmedmed";
+
+            string query = "";
+
+            if (Mathf.Max(strPercentage, Mathf.Max(intPercentage, dexPercentage)) == strPercentage) query += "high";
+            else if (strPercentage > intPercentage || strPercentage > dexPercentage) query += "med";
+            else query += "low";
+            
+            if (Mathf.Max(strPercentage, Mathf.Max(intPercentage, dexPercentage)) == intPercentage) query += "high";
+            else if(intPercentage > strPercentage || intPercentage > dexPercentage) query += "med";
+            else query += "low";
+
+            if (Mathf.Max(strPercentage, Mathf.Max(intPercentage, dexPercentage)) == dexPercentage) query += "high";
+            else if (dexPercentage > strPercentage || dexPercentage > intPercentage) query += "med";
+            else query += "low";
+
+            return query;
+        }
+
+        public void SetTimeScale(float newTimeScale) {
             Time.timeScale = newTimeScale;
+        }
+
+        public void IncreaseSkill(string skill) {
+            switch(skill) {
+                case "str": 
+                    _Skills[0]++; 
+                    break;
+                case "int": 
+                    _Skills[1]++;
+                    break;
+                case "dex": 
+                    _Skills[2]++;
+                    break;
+                default:
+                    break;
+            }
+            EventManager.Instance.Raise(new PointLostEvent());
+            EventManager.Instance.Raise(new GameStatisticsChangedEvent { eStr = _Skills[0], eInt = _Skills[1], eDex = _Skills[2] });
         }
         #endregion
 
         #region Callbacks to Events issued by MenuManager
         private void MainMenuButtonClicked(MainMenuButtonClickedEvent e) {
-            if (IsPausing || IsVictory || IsGameOver) Menu();
+            if (IsPausing || IsGameOver) Menu();
         }
 
         private void PlayButtonClicked(PlayButtonClickedEvent e) {
@@ -81,6 +174,14 @@ namespace EventsManager {
         private void QuitButtonClicked(QuitButtonClickedEvent e) {
             Application.Quit();
         }
+
+        private void PointGained(PointGainedEvent e) {
+            _CurrentPoints++;
+        }
+
+        private void PointLost(PointLostEvent e) {
+            _CurrentPoints--;
+        }
         #endregion
 
         #region GameState methode
@@ -94,6 +195,8 @@ namespace EventsManager {
         private void Play() {
             SetTimeScale(1);
             _GameState = GameState.gamePlay;
+            _Health = _MaxHealth;
+            EventManager.Instance.Raise(new GameStatisticsChangedEvent { eStr = _Skills[0], eInt = _Skills[1], eDex = _Skills[2] });
             EventManager.Instance.Raise(new GamePlayEvent());
         }
 
@@ -116,12 +219,6 @@ namespace EventsManager {
             SetTimeScale(0);
             _GameState = GameState.gameOver;
             EventManager.Instance.Raise(new GameOverEvent());
-        }
-
-        public void Victory() {
-            SetTimeScale(0);
-            _GameState = GameState.gameVictory;
-            EventManager.Instance.Raise(new GameVictoryEvent());
         }
         #endregion
     }

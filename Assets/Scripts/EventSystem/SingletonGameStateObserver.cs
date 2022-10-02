@@ -12,7 +12,6 @@
             EventManager.Instance.AddListener<GamePauseEvent>(GamePause);
             EventManager.Instance.AddListener<GameResumeEvent>(GameResume);
             EventManager.Instance.AddListener<GameOverEvent>(GameOver);
-            EventManager.Instance.AddListener<GameVictoryEvent>(GameVictory);
             EventManager.Instance.AddListener<GameStatisticsChangedEvent>(GameStatisticsChanged);
         }
 
@@ -22,7 +21,6 @@
             EventManager.Instance.RemoveListener<GamePauseEvent>(GamePause);
             EventManager.Instance.RemoveListener<GameResumeEvent>(GameResume);
             EventManager.Instance.RemoveListener<GameOverEvent>(GameOver);
-            EventManager.Instance.RemoveListener<GameVictoryEvent>(GameVictory);
             EventManager.Instance.RemoveListener<GameStatisticsChangedEvent>(GameStatisticsChanged);
 
         }
@@ -49,9 +47,6 @@
         }
 
         protected virtual void GameOver(GameOverEvent e) {
-        }
-
-        protected virtual void GameVictory(GameVictoryEvent e) {
         }
 
         protected virtual void GameStatisticsChanged(GameStatisticsChangedEvent e) {

@@ -18,9 +18,6 @@ namespace EventsManager {
         [Tooltip("Panel displayed when game over")]
         [SerializeField] GameObject _GameOverPanel;
 
-        [Tooltip("Panel displayed when victory")]
-        [SerializeField] GameObject _VictoryPanel;
-
         List<GameObject> _AllPanels;
         #endregion
 
@@ -45,7 +42,6 @@ namespace EventsManager {
                 _MainMenuPanel,
                 _PausePanel,
                 _GameOverPanel,
-                _VictoryPanel
             };
         }
 
@@ -94,10 +90,6 @@ namespace EventsManager {
 
         protected override void GameOver(GameOverEvent e) {
             OpenPanel(_GameOverPanel);
-        }
-
-        protected override void GameVictory(GameVictoryEvent e) {
-            OpenPanel(_VictoryPanel);
         }
         #endregion
     }
