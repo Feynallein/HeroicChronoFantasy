@@ -187,6 +187,7 @@ MonoBehaviour:
   _MaxWait: 2.5
   _Animator: {fileID: 1505822303396063536}
   _Emitter: {fileID: -6427449197364996118}
+  _DistanceToPlayerSound: 3
 --- !u!58 &3501809754101614326
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -230,9 +231,9 @@ MonoBehaviour:
   TriggerOnce: 0
   Preload: 0
   Params: []
-  OverrideAttenuation: 0
+  OverrideAttenuation: 1
   OverrideMinDistance: 1
-  OverrideMaxDistance: 20
+  OverrideMaxDistance: 2
 --- !u!1 &8296980111589966790
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,6 +5,8 @@ namespace EventsManager {
     using SDD.Events;
     using UnityEngine.InputSystem;
     using System.Linq;
+    using FMODUnity;
+    using EventManager = SDD.Events.EventManager;
 
     public enum GameState { gameMenu, gamePlay, initializingLevel, gamePause, gameOver}
 
@@ -21,6 +23,7 @@ namespace EventsManager {
         #endregion
 
         [SerializeField] private int _MaxHealth;
+        [SerializeField] private StudioEventEmitter _Emitter;
 
         private List<int> _Skills = new() { 0, 0, 0 };
 
@@ -217,6 +220,7 @@ namespace EventsManager {
 
         public void Over() {
             if (_GameState == GameState.gameOver) return;
+            _Emitter.Play();
             SetTimeScale(0);
             _GameState = GameState.gameOver;
             EventManager.Instance.Raise(new GameOverEvent());

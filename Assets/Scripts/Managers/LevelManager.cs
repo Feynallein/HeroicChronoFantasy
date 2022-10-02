@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using EventsManager;
 using SDD.Events;
+using FMODUnity;
 
 public class LevelManager : Manager<LevelManager> {
     public static int _DurationBetweenEvents = 10;
@@ -11,6 +12,7 @@ public class LevelManager : Manager<LevelManager> {
     [SerializeField] private List<GameObject> _Minigames;
     [SerializeField] private GameObject _Background;
     [SerializeField] private int _MaxEnemies;
+    [SerializeField] private EventReferenceDictionary _Events;
 
     private float _Clock;
     private bool _Start = false;
@@ -53,9 +55,9 @@ public class LevelManager : Manager<LevelManager> {
 
     public void MiniGameTime() {
         int rand = Random.Range(0, _Minigames.Count);
-        GameManager.Instance.SetTimeScale(0);
         _Minigames[rand].SetActive(true);
         _Background.SetActive(true);
+        GameManager.Instance.SetTimeScale(0);
     }
 
     public void MiniGameCallback(bool win) {
@@ -63,9 +65,13 @@ public class LevelManager : Manager<LevelManager> {
         _Minigames.ForEach(miniGame => miniGame.SetActive(false));
         GameManager.Instance.SetTimeScale(1);
         if (win) {
-            EventManager.Instance.Raise(new PointGainedEvent());
+            SfxManager.PlayOneShot(_Events["win"], transform);
+            SDD.Events.EventManager.Instance.Raise(new PointGainedEvent());
             _Enemies--;
-        } else GameManager.Instance.DecrementHealth(1);
+        } else {
+            SfxManager.PlayOneShot(_Events["lose"], transform);
+            GameManager.Instance.DecrementHealth(1);
+        }
     }
 
     protected override void GameOver(GameOverEvent e) {

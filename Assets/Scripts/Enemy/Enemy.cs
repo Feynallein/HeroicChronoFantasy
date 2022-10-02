@@ -16,6 +16,7 @@ public class Enemy : MonoBehaviour {
     [SerializeField] private float _MaxWait;
     [SerializeField] private Animator _Animator;
     [SerializeField] private StudioEventEmitter _Emitter;
+    [SerializeField] private float _DistanceToPlayerSound;
 
     private NavMeshAgent _Agent;
     private bool _DestinationReached = false;
@@ -42,8 +43,11 @@ public class Enemy : MonoBehaviour {
         if (inputDirection != Vector2.zero) {
             float angle = Mathf.Atan2(inputDirection.y, inputDirection.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-            if (!_Emitter.IsPlaying()) _Emitter.Play(); //todo: if dist to player < value
+            if(Vector3.Distance(transform.position, PlayerController.Instance.transform.position) < _DistanceToPlayerSound) {
+                if (!_Emitter.IsPlaying()) _Emitter.Play();
+            } else _Emitter.Stop();
         }
+
         _Animator.SetBool("IsMoving", inputDirection != Vector2.zero);
         if (!_Agent.pathPending && !_DestinationReached) {
             if (_Agent.remainingDistance <= _Agent.stoppingDistance) {
@@ -67,6 +71,10 @@ public class Enemy : MonoBehaviour {
         }
 
         if(_DestinationReached) _ElapsedTime += Time.deltaTime;
+    }
+
+    private void OnDestroy() {
+        _Emitter.Stop();
     }
 
     private void ChangeTarget(Vector3 target) {

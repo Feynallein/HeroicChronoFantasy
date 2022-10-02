@@ -1,3 +1,4 @@
+using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,7 @@ public class Clic : MiniGame {
     [SerializeField] private int _NumberOfButtonToSpawn;
     [SerializeField] private float _TimeBetweenSpawns;
     [SerializeField] private float _MaxScaleFactor;
+    [SerializeField] private StudioEventEmitter _Emitter;
 
     private List<GameObject> _SpawnedButton = new();
     private float _TimeBeforeSpawn = 0;
@@ -43,6 +45,7 @@ public class Clic : MiniGame {
     }
 
     public void ButtonCallback(GameObject button) {
+        _Emitter.Play();
         Destroy(button);
         _SpawnedButton.Remove(button);
     }

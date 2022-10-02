@@ -39,7 +39,7 @@ MonoBehaviour:
   Path: Assets/StreamingAssets/Desktop/UI.bank
   Name: UI
   StudioPath: bank:/UI
-  lastModified: 638003184738647816
+  lastModified: 638003335078182637
   FileSizes: []
   Exists: 1
 --- !u!114 &-9004696839838106708
@@ -832,7 +832,6 @@ MonoBehaviour:
   - {fileID: 6996815121282121935}
   - {fileID: -4136503757991778471}
   - {fileID: -8217692198956050378}
-  - {fileID: 7932711467686191786}
   - {fileID: 5621747496930095865}
   - {fileID: -3246886730219278658}
   - {fileID: 1634795592016478753}
@@ -845,7 +844,7 @@ MonoBehaviour:
   - {fileID: 297319014445162583}
   StringsBanks:
   - {fileID: 3839658189508691489}
-  cacheTime: 638003184739140165
+  cacheTime: 638003335078182637
   cacheVersion: 10
 --- !u!114 &134896019078759196
 MonoBehaviour:
@@ -886,7 +885,7 @@ MonoBehaviour:
   Path: Assets/StreamingAssets/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638003184738308198
+  lastModified: 638003335077440888
   FileSizes: []
   Exists: 1
 --- !u!114 &473400666536929768
@@ -1342,10 +1341,10 @@ MonoBehaviour:
   Path: Assets/StreamingAssets/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638003184738318215
+  lastModified: 638003335077450867
   FileSizes:
   - Name: 
-    Value: 1428
+    Value: 1392
   Exists: 1
 --- !u!114 &4100207815176076315
 MonoBehaviour:
@@ -1420,9 +1419,9 @@ MonoBehaviour:
   Is3D: 0
   IsOneShot: 0
   Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 3562
+  MinDistance: 0.3
+  MaxDistance: 0.5
+  Length: 730
 --- !u!114 &4859525539632048688
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1465,7 +1464,7 @@ MonoBehaviour:
   Path: Assets/StreamingAssets/Desktop/Music.bank
   Name: Music
   StudioPath: bank:/Music
-  lastModified: 638003184739140165
+  lastModified: 638003335077699807
   FileSizes: []
   Exists: 1
 --- !u!114 &5018740609074433590
@@ -1547,7 +1546,7 @@ MonoBehaviour:
   Path: Assets/StreamingAssets/Desktop/SFX.bank
   Name: SFX
   StudioPath: bank:/SFX
-  lastModified: 638003184738936078
+  lastModified: 638003335077997889
   FileSizes: []
   Exists: 1
 --- !u!114 &5466397260972860238
@@ -1954,33 +1953,6 @@ MonoBehaviour:
   IsGlobal: 0
   Labels: []
   Exists: 1
---- !u!114 &7932711467686191786
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/SFX/Tick
-  m_EditorClassIdentifier: 
-  Path: event:/SFX/Tick
-  Guid:
-    Data1: -1971958235
-    Data2: 1178486185
-    Data3: -1455951959
-    Data4: 715177837
-  Banks:
-  - {fileID: 5267682779389295267}
-  IsStream: 0
-  Is3D: 0
-  IsOneShot: 0
-  Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 0
 --- !u!114 &8201371100059340243
 MonoBehaviour:
   m_ObjectHideFlags: 0

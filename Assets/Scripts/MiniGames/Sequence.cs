@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using Redcode.Extensions;
+using FMODUnity;
 
 public class Sequence : MiniGame {
     [SerializeField] private GameObject _ArrowPrefab;
@@ -11,6 +12,7 @@ public class Sequence : MiniGame {
     [SerializeField] private float _YOffset;
     [SerializeField] private float _XOffset;
     [SerializeField, ColorUsage(true, true)] private Color _GoodColor;
+    [SerializeField] private StudioEventEmitter _Emitter;
 
     private List<string> _StringSeq = new();
     private List<GameObject> _ArrowSeq = new();
@@ -44,6 +46,7 @@ public class Sequence : MiniGame {
     private void GoodInput() {
         _ArrowSeq[_Cursor].GetComponent<Image>().color = _GoodColor;
         _Cursor++;
+        _Emitter.Play();
         if (_Cursor == _SequenceLength) LevelManager.Instance.MiniGameCallback(true);
     }
 

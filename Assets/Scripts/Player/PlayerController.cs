@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour {
+public class PlayerController : Singleton<PlayerController> {
     [SerializeField] private float _Speed;
     [SerializeField] private Animator _Animator;
     [SerializeField] private StudioEventEmitter _Emitter;
@@ -11,7 +11,9 @@ public class PlayerController : MonoBehaviour {
     private PlayerInputActions _Actions;
     private Rigidbody2D _Rigidbody;
 
-    private void Awake() {
+    protected override void Awake() {
+        base.Awake();
+
         _Actions = new PlayerInputActions();
         _Rigidbody = GetComponent<Rigidbody2D>();
     }
