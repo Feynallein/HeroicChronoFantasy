@@ -1,2 +1,1 @@
-# Ludum Dare #51 Project
-# By Feynallein & DeadUnicorn
+# Ludum Dare #51 Project by Feynallein & DeadUnicorn
