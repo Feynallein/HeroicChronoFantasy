@@ -4,6 +4,7 @@
     using UnityEngine;
     using UnityEngine.UI;
     using SDD.Events;
+    using TMPro;
 
     public class HudManager : Manager<HudManager> {
         #region Variables
@@ -11,11 +12,11 @@
         [SerializeField] GameObject _HUD;
         #endregion
 
-        [SerializeField] List<Text> _HUDSkills = new();
+        [SerializeField] List<TextMeshProUGUI> _HUDSkills = new();
         [SerializeField] List<GameObject> _HUDSkillsButtons = new();
-        [SerializeField] Text _CurrentPointsHUD;
+        [SerializeField] TextMeshProUGUI _CurrentPointsHUD;
         [SerializeField] GameObject _LeftPanel;
-        [SerializeField] Text _CurrentClass;
+        [SerializeField] TextMeshProUGUI _CurrentClass;
 
         List<string> _HUDSkillsBaseText = new();
 
@@ -47,7 +48,7 @@
         }
 
         private void UpdateCurrentPointsHUD() {
-            _CurrentPointsHUD.text = "Points Available: " + GameManager.Instance.CurrentPoints;
+            _CurrentPointsHUD.text = "Points Available:\n" + GameManager.Instance.CurrentPoints;
             if (GameManager.Instance.CurrentPoints == 0) ShowButtons(false);
             else ShowButtons(true);
         }
