@@ -28,13 +28,25 @@ public class LevelManager : Manager<LevelManager> {
     }
 
     private void Spawns() {
-        for(int i = 0; i < GameManager.Instance.Wave; i++) {
+        int nbToSpawn = ComputeSpawnsFromWave(GameManager.Instance.Wave);
+        for(int i = 0; i < nbToSpawn; i++) {
             _Spawners[Random.Range(0, _Spawners.Count)].Spawn();
         }
         GameManager.Instance.AddWave();
     }
 
-    private void MiniGameTime() {
+    private int ComputeSpawnsFromWave(int wave) {
+        return wave switch {
+            < 2 => 1,
+            < 5 => 2,
+            < 9 => 3,
+            < 14 => 4,
+            < 20 => 5,
+            _ => 6,
+        };
+    }
+
+    public void MiniGameTime() {
         int rand = Random.Range(0, _Minigames.Count);
         GameManager.Instance.SetTimeScale(0);
         _Minigames[rand].SetActive(true);
@@ -60,6 +72,7 @@ public class LevelManager : Manager<LevelManager> {
     protected override void GamePlay(GamePlayEvent e) {
         _Clock = 0;
         _Start = true;
+        Spawns();
     }
 
     protected override void GameMenu(GameMenuEvent e) {

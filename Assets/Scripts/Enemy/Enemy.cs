@@ -13,6 +13,7 @@ public class Enemy : MonoBehaviour {
     [SerializeField] private float _MinDistance;
     [SerializeField] private float _MinWait;
     [SerializeField] private float _MaxWait;
+    [SerializeField] private Animator _Animator;
 
     private NavMeshAgent _Agent;
     private bool _DestinationReached = false;
@@ -33,6 +34,15 @@ public class Enemy : MonoBehaviour {
     }
 
     void Update() {
+        transform.position = transform.position.WithZ(0);
+
+        Vector2 inputDirection = _Agent.velocity; //_Actions.Player.Move.ReadValue<Vector2>();
+        if (inputDirection != Vector2.zero) {
+            float angle = Mathf.Atan2(inputDirection.y, inputDirection.x) * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        }
+        _Animator.SetBool("IsMoving", inputDirection != Vector2.zero);
+
         if (!_Agent.pathPending && !_DestinationReached) {
             if (_Agent.remainingDistance <= _Agent.stoppingDistance) {
                 if (!_Agent.hasPath || _Agent.velocity.sqrMagnitude == 0f) {

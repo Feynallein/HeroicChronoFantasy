@@ -34,4 +34,15 @@ public class PlayerController : MonoBehaviour {
         _Rigidbody.velocity = inputDirection * _Speed;
         _Animator.SetBool("IsMoving", inputDirection != Vector2.zero);
     }
+
+    private void OnCollisionEnter2D(Collision2D collision) {
+        Enemy enemy = collision.gameObject.GetComponent<Enemy>();
+        if(enemy != null) {
+            LevelManager.Instance.MiniGameTime();
+            Destroy(collision.gameObject);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other) {
+    }
 }
