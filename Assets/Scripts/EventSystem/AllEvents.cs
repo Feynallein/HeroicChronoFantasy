@@ -24,10 +24,9 @@
     }
 
     public class GameStatisticsChangedEvent : SDD.Events.Event {
-        public int eShape { get; set; }
-        public int eKnowledge { get; set; }
-        public int eScience { get; set; }
-        public int eSocial { get; set; }
+        public int eStr { get; set; }
+        public int eInt { get; set; }
+        public int eDex { get; set; }
     }
 
     public class PointGainedEvent : SDD.Events.Event {

@@ -1,89 +1,54 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static Skill;
 using static Jobs.Job;
 
 public class Jobs : MonoBehaviour {
     public enum Job {
-        jobless,
-        businessman,
+        wanderer,
+        knight,
 
-        actor,
-        engineer,
-        osteopath,
-        librarian,
+        barbarian,
+        sorcerer,
+        rogue,
 
-        worker,
-        philosopher,
-        scientist,
-        salesman,
+        paladin,
+        samourai,
 
-        adventurer,
-        blacksmith,
-        firefighter,
+        battlemage,
+        bard,
 
-        musician,
-        linguist,
-        writter,
+        archer,
+        assassin,
 
-        IT_guy,
-        teacher,
-        doctor,
-
-        influencer,
-        streamer,
-        psychologist,
-
-        archeologist,
-        lumberjack,
-        sports_coach,
-        phd,
-        film_writer, //todo: change
-        politician,
+        clerk,
+        monk,
+        ninja,
 
         error,
     }
 
     public static Job ConvertRangeSkillStringToJob(string str) {
         return str switch {
-            "lowlowlowlow" => jobless,
-            "medmedmedmed" => businessman,
+            "lowlowlow" => wanderer,
+            "medmedmed" => knight,
 
-            "medmedmedlow" => actor,
-            "medmedlowmed" => engineer,
-            "medlowmedmed" => jobless,
-            "lowmedmedmed" => jobless,
+            "highlowlow" => barbarian,
+            "lowhighlow" => sorcerer,
+            "lowlowhigh" => rogue,
 
-            "highlowlowlow" => worker,
-            "lowhighlowlow" => philosopher,
-            "lowlowhighlow" => osteopath,
-            "lowlowlowhigh" => librarian,
+            "highmedlow" => paladin,
+            "highlowmed" => samourai,
 
-            "highmedlowlow" => adventurer,
-            "highlowmedlow" => blacksmith,
-            "highlowlowmed" => writter,
+            "medhighlow" => battlemage,
+            "lowhighmed" => bard,
 
-            "medhighlowlow" => musician,
-            "lowhighmedlow" => linguist,
-            "lowhighlowmed" => writter,
+            "medlowhigh" => archer,
+            "lowmedhigh" => assassin,
 
-            "medlowhighlow" => IT_guy,
-            "lowmedhighlow" => teacher,
-            "lowlowhighmed" => doctor,
-
-            "medlowlowhigh" => influencer,
-            "lowmedlowhigh" => streamer,
-            "lowlowmedhigh" => psychologist,
-
-            "medmedlowlow" => archeologist,
-            "medlowmedlow" => lumberjack,
-            "medlowlowmed" => sports_coach,
-
-            "lowmedmedlow" => phd,
-            "lowmedlowmed" => film_writer,
-
-            "lowlowmedmed" => politician,
+            "medmedlow" => clerk,
+            "medlowmed" => monk,
+            "lowmedmed" => ninja,
 
             _ => error,
         };
@@ -91,41 +56,25 @@ public class Jobs : MonoBehaviour {
 
     public static string JobToString(Job job) {
         return job switch {
-            jobless => "Jobless",
-            businessman => "Businessman",
+            wanderer => "Wanderer",
+            knight => "Knight",
 
-            actor => "Actor",
-            engineer => "Engineer",
-            osteopath => "Osteopath",
-            librarian => "Librarian",
+            barbarian => "Barbarian",
+            sorcerer => "Sorcerer",
+            rogue => "Rogue",
 
-            worker => "Worker",
-            philosopher => "Philosopher",
-            scientist => "Scientist",
-            salesman => "Salesman",
+            paladin => "Paladin",
+            samourai => "Samouraï",
 
-            adventurer => "Adventurer",
-            blacksmith => "Blacksmith",
-            firefighter => "Firefighter",
+            battlemage => "Battlemage",
+            bard => "Bard",
 
-            musician => "Musician",
-            linguist => "Linguist",
-            writter => "Writter",
+            archer => "Archer",
+            assassin => "Assassin",
 
-            IT_guy => "IT Guy",
-            teacher => "Teacher",
-            doctor => "Doctor",
-
-            influencer => "Influencer",
-            streamer => "Streamer",
-            psychologist => "Psychologist",
-
-            archeologist => "Archeologist",
-            lumberjack => "Lumberjack",
-            sports_coach => "Sports Coach",
-            phd => "PhD",
-            film_writer => "Film Writter",
-            politician => "Politician",
+            clerk => "Clerk",
+            monk => "Monk",
+            ninja => "Ninja",
 
             _ => "Error"
         };

@@ -4,6 +4,8 @@ namespace EventsManager {
     using System.Collections.Generic;
     using SDD.Events;
     using UnityEngine.InputSystem;
+    using System.Linq;
+    using UnityEditor.Search;
 
     public enum GameState { gameMenu, gamePlay, initializingLevel, gamePause, gameOver}
 
@@ -21,12 +23,7 @@ namespace EventsManager {
 
         [SerializeField] private int _MaxHealth;
 
-        private List<Skill> _Skills = new() {
-            new Skill("Shape"),
-            new Skill("Knowledge"),
-            new Skill("Science"),
-            new Skill("Social"),
-        };
+        private List<int> _Skills = new() { 0, 0, 0 };
 
         private int _CurrentPoints = 0;
 
@@ -90,6 +87,47 @@ namespace EventsManager {
                 if (IsPausing) Resume();
                 else Pause();
             }
+
+            if (Keyboard.current.spaceKey.wasPressedThisFrame) EventManager.Instance.Raise(new PointGainedEvent());
+        }
+
+        public string GetClass() {
+            int total = _Skills.Sum();
+
+            if (total == 0) return Jobs.JobToString(Jobs.ConvertRangeSkillStringToJob("lowlowlow"));
+
+            float strPercentage = (_Skills[0] * 100) / total;
+            float intPercentage = (_Skills[1] * 100) / total;
+            float dexPercentage = (_Skills[2] * 100) / total;
+
+            string query = ComputeQuery(strPercentage, intPercentage, dexPercentage, total);
+
+            return Jobs.JobToString(Jobs.ConvertRangeSkillStringToJob(query));
+        }
+
+        private string ComputeQuery(float strPercentage, float intPercentage, float dexPercentage, float total) {
+
+            if (strPercentage == intPercentage && intPercentage == dexPercentage) return "medmedmed";
+
+            if (strPercentage == intPercentage && strPercentage != 0 && strPercentage > dexPercentage) return "medmedlow";
+            if (strPercentage == dexPercentage && strPercentage != 0 && strPercentage > intPercentage) return "medlowmed";
+            if (intPercentage == dexPercentage && intPercentage != 0 && intPercentage > strPercentage) return "lowmedmed";
+
+            string query = "";
+
+            if (Mathf.Max(strPercentage, Mathf.Max(intPercentage, dexPercentage)) == strPercentage) query += "high";
+            else if (strPercentage > intPercentage || strPercentage > dexPercentage) query += "med";
+            else query += "low";
+            
+            if (Mathf.Max(strPercentage, Mathf.Max(intPercentage, dexPercentage)) == intPercentage) query += "high";
+            else if(intPercentage > strPercentage || intPercentage > dexPercentage) query += "med";
+            else query += "low";
+
+            if (Mathf.Max(strPercentage, Mathf.Max(intPercentage, dexPercentage)) == dexPercentage) query += "high";
+            else if (dexPercentage > strPercentage || dexPercentage > intPercentage) query += "med";
+            else query += "low";
+
+            return query;
         }
 
         public void SetTimeScale(float newTimeScale) {
@@ -98,22 +136,20 @@ namespace EventsManager {
 
         public void IncreaseSkill(string skill) {
             switch(skill) {
-                case "Shape": 
-                    _Skills[0].IncrementValue(1); 
+                case "str": 
+                    _Skills[0]++; 
                     break;
-                case "Knowledge": 
-                    _Skills[1].IncrementValue(1);
+                case "int": 
+                    _Skills[1]++;
                     break;
-                case "Science": 
-                    _Skills[2].IncrementValue(1);
+                case "dex": 
+                    _Skills[2]++;
                     break;
-                case "Social":
-                    _Skills[3].IncrementValue(1);
+                default:
                     break;
-                default: break;
             }
             EventManager.Instance.Raise(new PointLostEvent());
-            EventManager.Instance.Raise(new GameStatisticsChangedEvent { eShape = _Skills[0].Value, eKnowledge = _Skills[1].Value, eScience = _Skills[2].Value, eSocial = _Skills[3].Value });
+            EventManager.Instance.Raise(new GameStatisticsChangedEvent { eStr = _Skills[0], eInt = _Skills[1], eDex = _Skills[2] });
         }
         #endregion
 
@@ -160,7 +196,8 @@ namespace EventsManager {
         private void Play() {
             SetTimeScale(1);
             _GameState = GameState.gamePlay;
-            EventManager.Instance.Raise(new GameStatisticsChangedEvent { eShape = _Skills[0].Value, eKnowledge = _Skills[1].Value, eScience = _Skills[2].Value, eSocial = _Skills[3].Value });
+            _Health = _MaxHealth;
+            EventManager.Instance.Raise(new GameStatisticsChangedEvent { eStr = _Skills[0], eInt = _Skills[1], eDex = _Skills[2] });
             EventManager.Instance.Raise(new GamePlayEvent());
         }
 

@@ -15,6 +15,7 @@
         [SerializeField] List<GameObject> _HUDSkillsButtons = new();
         [SerializeField] Text _CurrentPointsHUD;
         [SerializeField] GameObject _LeftPanel;
+        [SerializeField] Text _CurrentClass;
 
         List<string> _HUDSkillsBaseText = new();
 
@@ -62,6 +63,10 @@
                 _HUDSkills[i].text = _HUDSkillsBaseText[i] + skills[i];
             }
         }
+
+        private void UpdateClass() {
+            _CurrentClass.text = "You are a " + GameManager.Instance.GetClass().ToLower();
+        }
         #endregion
 
         #region Event's Callbacks
@@ -82,8 +87,9 @@
         }
 
         protected override void GameStatisticsChanged(GameStatisticsChangedEvent e) {
-            UpdateTexts(new List<int>() { e.eShape, e.eKnowledge, e.eScience, e.eSocial});
+            UpdateTexts(new List<int>() { e.eStr, e.eInt, e.eDex });
             UpdateCurrentPointsHUD();
+            UpdateClass();
         }
 
         private void PointGained(PointGainedEvent e) {
@@ -96,15 +102,15 @@
         #endregion
 
         public void StrButtonPressed() {
-            GameManager.Instance.IncreaseSkill("Strength");
+            GameManager.Instance.IncreaseSkill("str");
         }
 
         public void IntButtonPressed() {
-            GameManager.Instance.IncreaseSkill("Intelligence");
+            GameManager.Instance.IncreaseSkill("int");
         }
 
         public void DexButtonPressed() {
-            GameManager.Instance.IncreaseSkill("Dexterity");
+            GameManager.Instance.IncreaseSkill("dex");
         }
     }
 }
