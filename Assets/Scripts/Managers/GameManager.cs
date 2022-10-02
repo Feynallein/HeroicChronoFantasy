@@ -5,7 +5,6 @@ namespace EventsManager {
     using SDD.Events;
     using UnityEngine.InputSystem;
     using System.Linq;
-    using UnityEditor.Search;
 
     public enum GameState { gameMenu, gamePlay, initializingLevel, gamePause, gameOver}
 

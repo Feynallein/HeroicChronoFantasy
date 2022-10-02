@@ -93,7 +93,7 @@ GameObject:
   - component: {fileID: 8430855771819685215}
   - component: {fileID: 1540173820260055850}
   m_Layer: 0
-  m_Name: Button
+  m_Name: ClicButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

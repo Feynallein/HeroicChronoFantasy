@@ -74,10 +74,6 @@
             SetHudActive(true);
         }
 
-        protected override void GameVictory(GameVictoryEvent e) {
-            SetHudActive(false);
-        }
-
         protected override void GameOver(GameOverEvent e) {
             SetHudActive(false);
         }

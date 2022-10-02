@@ -5,8 +5,9 @@ using EventsManager;
 using SDD.Events;
 
 public class LevelManager : Manager<LevelManager> {
+    public static int _DurationBetweenEvents = 10;
+
     [SerializeField] List<EnemySpawner> _Spawners = new();
-    [SerializeField] private int _DurationBetweenEvents = 10;
     [SerializeField] private List<GameObject> _Minigames;
     [SerializeField] private GameObject _Background;
 
@@ -62,11 +63,7 @@ public class LevelManager : Manager<LevelManager> {
     }
 
     protected override void GameOver(GameOverEvent e) {
-
-    }
-
-    protected override void GameVictory(GameVictoryEvent e) {
-
+        _Start = false;
     }
 
     protected override void GamePlay(GamePlayEvent e) {
@@ -76,6 +73,6 @@ public class LevelManager : Manager<LevelManager> {
     }
 
     protected override void GameMenu(GameMenuEvent e) {
-
+        _Start = false;
     }
 }

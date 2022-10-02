@@ -7,7 +7,6 @@ public class Clic : MiniGame {
     [SerializeField] private GameObject _ButtonToSpawn;
     [SerializeField] private Transform _TopLeftBound;
     [SerializeField] private Transform _BottomRightBound;
-    [SerializeField] private Image _Image;
     [SerializeField] private int _NumberOfButtonToSpawn;
     [SerializeField] private int _TimeBetweenSpawns;
 
@@ -38,7 +37,6 @@ public class Clic : MiniGame {
         GameObject go = Instantiate(_ButtonToSpawn, pos, transform.rotation, transform);
         go.GetComponent<Button>().onClick.AddListener(delegate { ButtonCallback(go); });
         _NumberOfButtonSpawned++;
-        //go.GetComponent<Button>().image = _Image;
         _SpawnedButton.Add(go);
     }
 
