@@ -4,9 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class MiniGame : MonoBehaviour {
-    [SerializeField] private float _Duration;
+    [SerializeField] protected float _Duration;
 
-    private float _ElapsedTime;
+    protected float _ElapsedTime;
 
     protected virtual void OnEnable() {
         _ElapsedTime = 0;

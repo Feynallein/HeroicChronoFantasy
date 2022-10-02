@@ -19,6 +19,7 @@ public class Sequence : MiniGame {
     protected override void OnEnable() {
         base.OnEnable();
         _Cursor = 0;
+        _ArrowSeq.ForEach(x => Destroy(x));
         _StringSeq.Clear();
         _ArrowSeq.Clear();
         GenerateSequence();
@@ -73,13 +74,18 @@ public class Sequence : MiniGame {
     }
 
     private void PrintSequence() {
-        int y = -1;
+        int y = ((_SequenceLength/_MaxArrowInLine)/2) - 2;
+        int initialX = -(_MaxArrowInLine / 2);
+        int x = initialX;
         for(int i = 0; i < _SequenceLength; i++) {
-            int x = i % _MaxArrowInLine;
-            if (x == 0) y++;
             GameObject go = Instantiate(_ArrowPrefab, transform.position.WithXY(transform.position.x + x * _XOffset, transform.position.y - y * _YOffset), transform.rotation, transform);
             go.transform.Rotate(go.transform.forward, SeqStrToAngle(_StringSeq[i]));
             _ArrowSeq.Add(go);
+            x++;
+            if(x == _MaxArrowInLine/2) {
+                x = initialX;
+                y++;
+            }
         }
     }
 }

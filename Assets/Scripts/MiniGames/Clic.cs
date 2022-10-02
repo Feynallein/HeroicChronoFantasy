@@ -8,7 +8,8 @@ public class Clic : MiniGame {
     [SerializeField] private Transform _TopLeftBound;
     [SerializeField] private Transform _BottomRightBound;
     [SerializeField] private int _NumberOfButtonToSpawn;
-    [SerializeField] private int _TimeBetweenSpawns;
+    [SerializeField] private float _TimeBetweenSpawns;
+    [SerializeField] private float _MaxScaleFactor;
 
     private List<GameObject> _SpawnedButton = new();
     private float _TimeBeforeSpawn = 0;
@@ -36,6 +37,7 @@ public class Clic : MiniGame {
         Vector3 pos = new Vector3(Random.Range(_TopLeftBound.position.x, _BottomRightBound.position.x), Random.Range(_TopLeftBound.position.y, _BottomRightBound.position.y), 0);
         GameObject go = Instantiate(_ButtonToSpawn, pos, transform.rotation, transform);
         go.GetComponent<Button>().onClick.AddListener(delegate { ButtonCallback(go); });
+        go.transform.localScale *= Random.Range(1, _MaxScaleFactor);
         _NumberOfButtonSpawned++;
         _SpawnedButton.Add(go);
     }
