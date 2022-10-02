@@ -1,9 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
-using static UnityEditor.Timeline.TimelinePlaybackControls;
 
 public class PlayerController : MonoBehaviour {
     [SerializeField] private float _Speed;
@@ -41,8 +38,5 @@ public class PlayerController : MonoBehaviour {
             LevelManager.Instance.MiniGameTime();
             Destroy(collision.gameObject);
         }
-    }
-
-    private void OnTriggerEnter(Collider other) {
     }
 }

@@ -36,7 +36,7 @@ public class Enemy : MonoBehaviour {
     void Update() {
         transform.position = transform.position.WithZ(0);
 
-        Vector2 inputDirection = _Agent.velocity; //_Actions.Player.Move.ReadValue<Vector2>();
+        Vector2 inputDirection = _Agent.velocity;
         if (inputDirection != Vector2.zero) {
             float angle = Mathf.Atan2(inputDirection.y, inputDirection.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);

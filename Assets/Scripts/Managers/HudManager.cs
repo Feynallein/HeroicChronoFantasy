@@ -46,7 +46,7 @@
         }
 
         private void UpdateCurrentPointsHUD() {
-            _CurrentPointsHUD.text = "Current Points: " + GameManager.Instance.CurrentPoints;
+            _CurrentPointsHUD.text = "Points Available: " + GameManager.Instance.CurrentPoints;
             if (GameManager.Instance.CurrentPoints == 0) ShowButtons(false);
             else ShowButtons(true);
         }
@@ -95,20 +95,16 @@
         }
         #endregion
 
-        public void ShapeButtonPressed() {
-            GameManager.Instance.IncreaseSkill("Shape");
+        public void StrButtonPressed() {
+            GameManager.Instance.IncreaseSkill("Strength");
         }
 
-        public void KnowledgeButtonPressed() {
-            GameManager.Instance.IncreaseSkill("Knowledge");
+        public void IntButtonPressed() {
+            GameManager.Instance.IncreaseSkill("Intelligence");
         }
 
-        public void ScienceButtonPressed() {
-            GameManager.Instance.IncreaseSkill("Science");
-        }
-
-        public void SocialButtonPressed() {
-            GameManager.Instance.IncreaseSkill("Social");
+        public void DexButtonPressed() {
+            GameManager.Instance.IncreaseSkill("Dexterity");
         }
     }
 }
