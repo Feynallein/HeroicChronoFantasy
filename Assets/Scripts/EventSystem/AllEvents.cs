@@ -19,6 +19,7 @@
         public int eStr { get; set; }
         public int eInt { get; set; }
         public int eDex { get; set; }
+        public int eHealth { get; set; }
     }
 
     public class PointGainedEvent : SDD.Events.Event {

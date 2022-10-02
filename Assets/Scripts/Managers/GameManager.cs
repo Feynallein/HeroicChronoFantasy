@@ -41,6 +41,7 @@ namespace EventsManager {
         public void DecrementHealth(int decrement) {
             _Health -= decrement;
             if (_Health <= 0) EventManager.Instance.Raise(new GameOverEvent());
+            else EventManager.Instance.Raise(new GameStatisticsChangedEvent() { eHealth = _Health, eStr = _Skills[0], eInt = _Skills[1], eDex = _Skills[2] });
         }
 
         #region Events' subscription
@@ -148,7 +149,7 @@ namespace EventsManager {
                     break;
             }
             EventManager.Instance.Raise(new PointLostEvent());
-            EventManager.Instance.Raise(new GameStatisticsChangedEvent { eStr = _Skills[0], eInt = _Skills[1], eDex = _Skills[2] });
+            EventManager.Instance.Raise(new GameStatisticsChangedEvent { eStr = _Skills[0], eInt = _Skills[1], eDex = _Skills[2], eHealth = _Health });
         }
         #endregion
 
@@ -196,7 +197,7 @@ namespace EventsManager {
             SetTimeScale(1);
             _GameState = GameState.gamePlay;
             _Health = _MaxHealth;
-            EventManager.Instance.Raise(new GameStatisticsChangedEvent { eStr = _Skills[0], eInt = _Skills[1], eDex = _Skills[2] });
+            EventManager.Instance.Raise(new GameStatisticsChangedEvent { eStr = _Skills[0], eInt = _Skills[1], eDex = _Skills[2], eHealth = _Health });
             EventManager.Instance.Raise(new GamePlayEvent());
         }
 

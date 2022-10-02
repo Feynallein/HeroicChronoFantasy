@@ -17,6 +17,9 @@
         [SerializeField] TextMeshProUGUI _CurrentPointsHUD;
         [SerializeField] GameObject _LeftPanel;
         [SerializeField] TextMeshProUGUI _CurrentClass;
+        [SerializeField] List<GameObject> _Lives;
+        [SerializeField] Sprite _HasHealth;
+        [SerializeField] Sprite _HasNoHealth;
 
         List<string> _HUDSkillsBaseText = new();
 
@@ -65,6 +68,12 @@
             }
         }
 
+        private void UpdateHealth(int newHealth) {
+            for(int i = 0; i < _Lives.Count; i++) {
+                _Lives[i].GetComponent<Image>().sprite = i < newHealth ? _HasHealth : _HasNoHealth;
+            }
+        }
+
         private void UpdateClass() {
             _CurrentClass.text = "You are a " + GameManager.Instance.GetClass().ToLower();
         }
@@ -85,6 +94,7 @@
 
         protected override void GameStatisticsChanged(GameStatisticsChangedEvent e) {
             UpdateTexts(new List<int>() { e.eStr, e.eInt, e.eDex });
+            UpdateHealth(e.eHealth);
             UpdateCurrentPointsHUD();
             UpdateClass();
         }
