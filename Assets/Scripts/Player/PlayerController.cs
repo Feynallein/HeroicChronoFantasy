@@ -1,3 +1,4 @@
+using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour {
     [SerializeField] private float _Speed;
     [SerializeField] private Animator _Animator;
+    [SerializeField] private StudioEventEmitter _Emitter;
 
     private PlayerInputActions _Actions;
     private Rigidbody2D _Rigidbody;
@@ -24,10 +26,12 @@ public class PlayerController : MonoBehaviour {
 
     private void FixedUpdate() {
         Vector2 inputDirection = _Actions.Player.Move.ReadValue<Vector2>();
+        //_Emitter.SetParameter("IsMoving", inputDirection != Vector2.zero ? 1 : 0);
         if (inputDirection != Vector2.zero) {
+            if (!_Emitter.IsPlaying()) _Emitter.Play();
             float angle = Mathf.Atan2(inputDirection.y, inputDirection.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-        }
+        } else _Emitter.Stop();
         _Rigidbody.velocity = inputDirection * _Speed;
         _Animator.SetBool("IsMoving", inputDirection != Vector2.zero);
     }

@@ -43,7 +43,7 @@
         }
 
         private void ShowButtons(bool value) {
-            _HUDSkillsButtons.ForEach(button => button.SetActive(value));
+            _HUDSkillsButtons.ForEach(button => button.GetComponent<Button>().interactable = value);
         }
 
         private void UpdateCurrentPointsHUD() {
