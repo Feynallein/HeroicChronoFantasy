@@ -13,25 +13,22 @@ public class Sequence : MiniGame {
     [SerializeField] private float _YOffset;
     [SerializeField] private float _XOffset;
     [SerializeField, ColorUsage(true, true)] private Color _GoodColor;
-    [SerializeField] private StudioEventEmitter _Emitter;
 
     private List<string> _StringSeq = new();
     private List<GameObject> _ArrowSeq = new();
     private int _Cursor;
     private int _SequenceLength;
 
-    protected override void OnEnable() {
-        base.OnEnable();
+    protected override void AdaptToDifficultyChild(float difficulty) {
         _Cursor = 0;
         _ArrowSeq.ForEach(x => Destroy(x));
         _StringSeq.Clear();
         _ArrowSeq.Clear();
+
+        _SequenceLength = Mathf.FloorToInt(_MinSequenceLength + difficulty * _MaxSequenceLength);
+
         GenerateSequence();
         PrintSequence();
-    }
-
-    protected override void AdaptToDifficultyChild(float difficulty) {
-        _SequenceLength = Mathf.FloorToInt(_MinSequenceLength + difficulty * _MaxSequenceLength);
     }
 
     protected override void Update() {
@@ -74,16 +71,16 @@ public class Sequence : MiniGame {
 
     private float SeqStrToAngle(string str) {
         return str switch {
-            "left" => -90,
-            "up"  => 180,
-            "right"  => 90,
-            "down"  => 0,
+            "left" => 180,
+            "up"  => 90,
+            "right"  => 0,
+            "down"  => -90,
             _ => 0,
         };
     }
 
     private void PrintSequence() {
-        int y = ((_SequenceLength/_MaxArrowInLine)/2) - 2;
+        int y = -((_SequenceLength/_MaxArrowInLine)/2);
         int initialX = -(_MaxArrowInLine / 2);
         int x = initialX;
         for(int i = 0; i < _SequenceLength; i++) {

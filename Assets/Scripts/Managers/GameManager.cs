@@ -47,7 +47,7 @@
 
         public void DecrementHealth(int decrement) {
             _Health -= decrement;
-            if (_Health <= 0) EventManager.Instance.Raise(new GameOverEvent());
+            if (_Health <= 0) Over();
             else EventManager.Instance.Raise(new GameStatisticsChangedEvent() { eHealth = _Health, eStr = _Skills[0], eInt = _Skills[1], eDex = _Skills[2] });
         }
 
@@ -93,8 +93,6 @@
                 if (IsPausing) Resume();
                 else Pause();
             }
-
-            if (Keyboard.current.spaceKey.wasPressedThisFrame) EventManager.Instance.Raise(new PointGainedEvent());
         }
 
         public string GetClass() {

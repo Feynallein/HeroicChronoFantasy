@@ -12,12 +12,8 @@ public class MouseSpam : MiniGame {
     private int _NumberOfClicks;
     private int _NumberOfClickNeeded;
 
-    protected override void OnEnable() {
-        base.OnEnable();
-        _NumberOfClicks = 0;
-    }
-
     protected override void AdaptToDifficultyChild(float difficulty) {
+        _NumberOfClicks = 0;
         _NumberOfClickNeeded = Mathf.FloorToInt(_MinNumberOfClickNeeded + difficulty * _MaxNumberOfClickNeeded);
     }
 
@@ -30,5 +26,6 @@ public class MouseSpam : MiniGame {
 
     public void ButtonCallback() {
         _NumberOfClicks++;
+        _Emitter.Play();
     }
 }
