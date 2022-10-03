@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using static UnityEngine.GraphicsBuffer;
+using SDD.Events;
+using EventsManager;
 
-public class Clock : MonoBehaviour {
-
-    private void Awake() {
+public class Clock : SimpleGameStateObserver {
+    protected override void GamePlay(GamePlayEvent e) {
+        transform.rotation = new Quaternion(0, 0, 0, 0);
         StartCoroutine(Rotate());
     }
 
