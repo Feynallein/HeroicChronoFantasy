@@ -5,6 +5,9 @@ namespace EventsManager {
     using UnityEngine;
     using SDD.Events;
     using UnityEngine.UI;
+    using TMPro;
+    using FMODUnity;
+    using EventManager = SDD.Events.EventManager;
 
     public class MenuManager : Manager<MenuManager> {
         #region Variables
@@ -18,8 +21,12 @@ namespace EventsManager {
         [Tooltip("Panel displayed when game over")]
         [SerializeField] GameObject _GameOverPanel;
 
-        [Tooltip("Panel displayed when victory")]
-        [SerializeField] GameObject _VictoryPanel;
+        [Tooltip("Panel displayed for credits")]
+        [SerializeField] GameObject _CreditsPanel;
+
+        [SerializeField] private TextMeshProUGUI _GameOverStats;
+
+        [SerializeField] private StudioEventEmitter _Emitter;
 
         List<GameObject> _AllPanels;
         #endregion
@@ -45,7 +52,7 @@ namespace EventsManager {
                 _MainMenuPanel,
                 _PausePanel,
                 _GameOverPanel,
-                _VictoryPanel
+                _CreditsPanel,
             };
         }
 
@@ -59,17 +66,36 @@ namespace EventsManager {
         /* Raising correspondent event */
         public void EscapeButtonHasBeenClicked() {
             EventManager.Instance.Raise(new EscapeButtonClickedEvent());
+            _Emitter.Play();
         }
 
         public void ResumeButtonHasBeenClicked() {
             EventManager.Instance.Raise(new ResumeButtonClickedEvent());
+            _Emitter.Play();
         }
 
         public void QuitButtonHasBeenClicked() {
             EventManager.Instance.Raise(new QuitButtonClickedEvent());
+            _Emitter.Play();
+        }
+
+        public void PlayButtonHasBeenClicked() {
+            EventManager.Instance.Raise(new PlayButtonClickedEvent());
+            _Emitter.Play();
+        }
+
+        public void MainMenuButtonHasBeenClicked() {
+            EventManager.Instance.Raise(new MainMenuButtonClickedEvent());
+            _Emitter.Play();
+        }
+        
+        public void CreditButtonHasBeenClicked() {
+            _Emitter.Play();
+            OpenPanel(_CreditsPanel);
         }
 
         public void ReturnToMainMenuFromMenu() {
+            _Emitter.Play();
             OpenPanel(_MainMenuPanel);
         }
         #endregion
@@ -94,10 +120,7 @@ namespace EventsManager {
 
         protected override void GameOver(GameOverEvent e) {
             OpenPanel(_GameOverPanel);
-        }
-
-        protected override void GameVictory(GameVictoryEvent e) {
-            OpenPanel(_VictoryPanel);
+            _GameOverStats.text = "Enemies killed: " + GameManager.Instance.GetTotalPoint();
         }
         #endregion
     }

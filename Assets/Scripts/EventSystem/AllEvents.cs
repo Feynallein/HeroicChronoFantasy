@@ -1,9 +1,4 @@
 ﻿namespace EventsManager {
-    using System.Collections;
-    using System.Collections.Generic;
-    using UnityEngine;
-    using SDD.Events;
-
     #region GameManager Events
     public class GameMenuEvent : SDD.Events.Event {
     }
@@ -20,11 +15,19 @@
     public class GameOverEvent : SDD.Events.Event {
     }
 
-    public class GameVictoryEvent : SDD.Events.Event {
+    public class GameStatisticsChangedEvent : SDD.Events.Event {
+        public int eStr { get; set; }
+        public int eInt { get; set; }
+        public int eDex { get; set; }
+        public int eHealth { get; set; }
     }
 
-    public class GameStatisticsChangedEvent : SDD.Events.Event {
-        //Todo: add statistics
+    public class PointGainedEvent : SDD.Events.Event {
+
+    }
+
+    public class PointLostEvent : SDD.Events.Event {
+
     }
     #endregion
 
