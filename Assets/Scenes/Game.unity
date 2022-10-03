@@ -5304,6 +5304,8 @@ MonoBehaviour:
         Data3: -1496802143
         Data4: -1958507346
       Path: event:/SFX/MinigameLose
+  _MaxWaveDifficultuIncrease: 24
+  _ClassEffectOnDifficulty: 2
 --- !u!1 &471394849
 GameObject:
   m_ObjectHideFlags: 0
@@ -9430,8 +9432,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2796ee6101eafe46a8e08af6b8a82d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _Duration: 10
-  _NumberOfClickNeeded: 20
+  _MaxDuration: 5
+  _MinDuration: 20
+  _MaxNumberOfClickNeeded: 10
+  _MinNumberOfClickNeeded: 15
   _ClickCounter: {fileID: 789923017}
   _Timer: {fileID: 332139806}
 --- !u!224 &1420839753
@@ -10144,9 +10148,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 067a855298ebedd46b3eda26a3d3d63f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _Duration: 10
+  _MaxDuration: 10
+  _MinDuration: 15
   _ArrowPrefab: {fileID: 7460418904073212773, guid: 96db91d43e009d343be82b5eed9bdfb3, type: 3}
-  _SequenceLength: 12
+  _MaxSequenceLength: 20
+  _MinSequenceLength: 10
   _MaxArrowInLine: 4
   _YOffset: 100
   _XOffset: 100
@@ -12594,11 +12600,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22edd21439797c4428ba65961713d245, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _Duration: 10
+  _MaxDuration: 10
+  _MinDuration: 15
   _ButtonToSpawn: {fileID: 8654901443986145917, guid: ea4b8db59cb6d9e448310702ec41580c, type: 3}
   _TopLeftBound: {fileID: 506894153}
   _BottomRightBound: {fileID: 1477352263}
-  _NumberOfButtonToSpawn: 10
+  _MaxNumberOfButtonToSpawn: 15
+  _MinNumberOfButtonToSpawn: 5
   _TimeBetweenSpawns: 0.5
   _MaxScaleFactor: 2.5
   _Emitter: {fileID: 2129859320}

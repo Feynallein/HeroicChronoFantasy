@@ -41,6 +41,10 @@
             _Wave++;
         }
 
+        public int GetSkill(int idx) {
+            return _Skills[idx];
+        }
+
         public void DecrementHealth(int decrement) {
             _Health -= decrement;
             if (_Health <= 0) EventManager.Instance.Raise(new GameOverEvent());

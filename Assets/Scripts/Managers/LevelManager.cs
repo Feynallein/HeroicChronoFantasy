@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using EventsManager;
-using SDD.Events;
-using FMODUnity;
 
 public class LevelManager : Manager<LevelManager> {
     public static int _DurationBetweenEvents = 10;
@@ -13,10 +11,13 @@ public class LevelManager : Manager<LevelManager> {
     [SerializeField] private GameObject _Background;
     [SerializeField] private int _MaxEnemies;
     [SerializeField] private EventReferenceDictionary _Events;
+    [SerializeField] private int _MaxWaveDifficultuIncrease;
+    [SerializeField] private int _ClassEffectOnDifficulty;
 
     private float _Clock;
     private bool _Start = false;
     private int _Enemies;
+
 
     protected override IEnumerator InitCoroutine() {
         _Background.SetActive(false);
@@ -56,6 +57,8 @@ public class LevelManager : Manager<LevelManager> {
     public void MiniGameTime() {
         int rand = Random.Range(0, _Minigames.Count);
         _Minigames[rand].SetActive(true);
+        float difficulty = GameManager.Instance.Wave / (_MaxWaveDifficultuIncrease - (GameManager.Instance.GetSkill(rand)/2));
+        _Minigames[rand].GetComponent<MiniGame>().SetDifficulty(difficulty);
         _Background.SetActive(true);
         GameManager.Instance.SetTimeScale(0);
     }

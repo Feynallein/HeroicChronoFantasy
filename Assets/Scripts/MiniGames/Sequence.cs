@@ -7,7 +7,8 @@ using FMODUnity;
 
 public class Sequence : MiniGame {
     [SerializeField] private GameObject _ArrowPrefab;
-    [SerializeField] private int _SequenceLength;
+    [SerializeField] private int _MaxSequenceLength;
+    [SerializeField] private int _MinSequenceLength;
     [SerializeField] private int _MaxArrowInLine;
     [SerializeField] private float _YOffset;
     [SerializeField] private float _XOffset;
@@ -17,6 +18,7 @@ public class Sequence : MiniGame {
     private List<string> _StringSeq = new();
     private List<GameObject> _ArrowSeq = new();
     private int _Cursor;
+    private int _SequenceLength;
 
     protected override void OnEnable() {
         base.OnEnable();
@@ -26,6 +28,10 @@ public class Sequence : MiniGame {
         _ArrowSeq.Clear();
         GenerateSequence();
         PrintSequence();
+    }
+
+    protected override void AdaptToDifficultyChild(float difficulty) {
+        _SequenceLength = Mathf.FloorToInt(_MinSequenceLength + difficulty * _MaxSequenceLength);
     }
 
     protected override void Update() {
