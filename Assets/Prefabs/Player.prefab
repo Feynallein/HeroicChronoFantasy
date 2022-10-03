@@ -261,33 +261,48 @@ MonoBehaviour:
     reqReferences: {fileID: 0}
     isExpanded: 1
     _keyValues:
+    - archer
+    - assassin
     - barbarian
     - bard
     - battlemage
     - clerk
     - knight
     - monk
+    - ninja
     - paladin
+    - rogue
+    - samurai
     - sorcerer
     - wanderer
     _keys:
+    - archer
+    - assassin
     - barbarian
     - bard
     - battlemage
     - clerk
     - knight
     - monk
+    - ninja
     - paladin
+    - rogue
+    - samurai
     - sorcerer
     - wanderer
     _values:
+    - {fileID: 7108339969198208228, guid: 696cdcb73c26d1a4f8b355773b33ca5b, type: 3}
+    - {fileID: 7108339969198208228, guid: 19ed5df4653fde942a172a7e0aabb31c, type: 3}
     - {fileID: 7108339969198208228, guid: a68f32a0513035942a22464d14fbf628, type: 3}
     - {fileID: 7108339969198208228, guid: f6144ca6063f1df46813aca11fd911fa, type: 3}
     - {fileID: 7108339969198208228, guid: c015f54097fb1fb499fd2158a0758606, type: 3}
     - {fileID: 7108339969198208228, guid: ac4c9ace0c637be4d91a728399048f90, type: 3}
     - {fileID: 7108339969198208228, guid: f4a7c251681b4fa429d13d862b18f1f5, type: 3}
     - {fileID: 7108339969198208228, guid: 6ca420871209a1243979b8c11853282e, type: 3}
+    - {fileID: 7108339969198208228, guid: 1ce636ef942dd1d4c83226a24d0bd8a1, type: 3}
     - {fileID: 7108339969198208228, guid: 290ebe9408b287f41a0278b878cf6795, type: 3}
+    - {fileID: 7108339969198208228, guid: 8295af0039cfb834bbb1da16cdb2ef63, type: 3}
+    - {fileID: 7108339969198208228, guid: ecdf2c3bf705a6a4991651b85f33d17c, type: 3}
     - {fileID: 7108339969198208228, guid: 9f4e6b2aaa8084f47abd484637a3bc43, type: 3}
     - {fileID: 7108339969198208228, guid: 39fd1219e6e0d884497006af7c5d2edd, type: 3}
 --- !u!58 &4579734772367927020
