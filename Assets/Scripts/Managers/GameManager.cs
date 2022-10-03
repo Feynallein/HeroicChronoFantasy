@@ -160,6 +160,7 @@
             }
             EventManager.Instance.Raise(new PointLostEvent());
             EventManager.Instance.Raise(new GameStatisticsChangedEvent { eStr = _Skills[0], eInt = _Skills[1], eDex = _Skills[2], eHealth = _Health });
+            PlayerController.Instance.UpdateSkin(GetClass());
         }
         #endregion
 

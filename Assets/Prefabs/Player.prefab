@@ -236,6 +236,60 @@ MonoBehaviour:
   _Speed: 2
   _Animator: {fileID: 4579734772104069422}
   _Emitter: {fileID: 4579734772367927022}
+  _Library: {fileID: 0}
+  _Skins:
+    reorderableList:
+      canAdd: 1
+      canRemove: 1
+      draggable: 1
+      expandable: 1
+      multipleSelection: 1
+      isExpanded: 1
+      label:
+        m_Text: Keys
+        m_Image: {fileID: 0}
+        m_Tooltip: 
+      headerHeight: 18
+      footerHeight: 13
+      slideEasing: 0.15
+      verticalSpacing: 2
+      showDefaultBackground: 1
+      elementDisplayType: 0
+      elementNameProperty: 
+      elementNameOverride: 
+      elementIcon: {fileID: 0}
+    reqReferences: {fileID: 0}
+    isExpanded: 1
+    _keyValues:
+    - barbarian
+    - bard
+    - battlemage
+    - clerk
+    - knight
+    - monk
+    - paladin
+    - sorcerer
+    - wanderer
+    _keys:
+    - barbarian
+    - bard
+    - battlemage
+    - clerk
+    - knight
+    - monk
+    - paladin
+    - sorcerer
+    - wanderer
+    _values:
+    - {fileID: 7108339969198208228, guid: a68f32a0513035942a22464d14fbf628, type: 3}
+    - {fileID: 7108339969198208228, guid: f6144ca6063f1df46813aca11fd911fa, type: 3}
+    - {fileID: 7108339969198208228, guid: c015f54097fb1fb499fd2158a0758606, type: 3}
+    - {fileID: 7108339969198208228, guid: ac4c9ace0c637be4d91a728399048f90, type: 3}
+    - {fileID: 7108339969198208228, guid: f4a7c251681b4fa429d13d862b18f1f5, type: 3}
+    - {fileID: 7108339969198208228, guid: 6ca420871209a1243979b8c11853282e, type: 3}
+    - {fileID: 7108339969198208228, guid: 290ebe9408b287f41a0278b878cf6795, type: 3}
+    - {fileID: 7108339969198208228, guid: 9f4e6b2aaa8084f47abd484637a3bc43, type: 3}
+    - {fileID: 7108339969198208228, guid: 39fd1219e6e0d884497006af7c5d2edd, type: 3}
 --- !u!58 &4579734772367927020
 CircleCollider2D:
   m_ObjectHideFlags: 0
