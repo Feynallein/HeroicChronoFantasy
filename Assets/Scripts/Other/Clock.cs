@@ -6,8 +6,9 @@ using static UnityEngine.GraphicsBuffer;
 using SDD.Events;
 using EventsManager;
 
-public class Clock : SimpleGameStateObserver {
-    protected override void GamePlay(GamePlayEvent e) {
+public class Clock : MonoBehaviour {
+    private void OnEnable() {
+        print("ok");
         transform.rotation = new Quaternion(0, 0, 0, 0);
         StartCoroutine(Rotate());
     }
