@@ -11827,8 +11827,8 @@ MonoBehaviour:
   _MaxSequenceLength: 20
   _MinSequenceLength: 10
   _MaxArrowInLine: 4
-  _YOffset: 50
-  _XOffset: 50
+  _YOffset: 100
+  _XOffset: 100
   _GoodColor: {r: 1.0775075, g: 0, b: 2.572549, a: 1}
 --- !u!114 &1554870303
 MonoBehaviour:
