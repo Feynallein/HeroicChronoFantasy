@@ -11,7 +11,7 @@ public class LevelManager : Manager<LevelManager> {
     [SerializeField] private GameObject _Background;
     [SerializeField] private int _MaxEnemies;
     [SerializeField] private EventReferenceDictionary _Events;
-    [SerializeField] private int _MaxWaveDifficultuIncrease;
+    [SerializeField] private int _MaxWaveDifficultyIncrease;
     [SerializeField] private int _ClassEffectOnDifficulty;
 
     private float _Clock;
@@ -57,7 +57,7 @@ public class LevelManager : Manager<LevelManager> {
     public void MiniGameTime() {
         int rand = Random.Range(0, _Minigames.Count);
         _Minigames[rand].SetActive(true);
-        float difficulty = GameManager.Instance.Wave / (_MaxWaveDifficultuIncrease + (GameManager.Instance.GetTotalPoint()/3) - (GameManager.Instance.GetSkill(rand)/2));
+        float difficulty = (float) GameManager.Instance.Wave / (_MaxWaveDifficultyIncrease + (GameManager.Instance.GetTotalPoint()/3) - (GameManager.Instance.GetSkill(rand)/2));
         _Minigames[rand].GetComponent<MiniGame>().SetDifficulty(difficulty);
         _Background.SetActive(true);
         GameManager.Instance.SetTimeScale(0);

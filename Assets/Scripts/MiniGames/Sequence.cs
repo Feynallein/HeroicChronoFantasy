@@ -13,25 +13,22 @@ public class Sequence : MiniGame {
     [SerializeField] private float _YOffset;
     [SerializeField] private float _XOffset;
     [SerializeField, ColorUsage(true, true)] private Color _GoodColor;
-    [SerializeField] private StudioEventEmitter _Emitter;
 
     private List<string> _StringSeq = new();
     private List<GameObject> _ArrowSeq = new();
     private int _Cursor;
     private int _SequenceLength;
 
-    protected override void OnEnable() {
-        base.OnEnable();
+    protected override void AdaptToDifficultyChild(float difficulty) {
         _Cursor = 0;
         _ArrowSeq.ForEach(x => Destroy(x));
         _StringSeq.Clear();
         _ArrowSeq.Clear();
+
+        _SequenceLength = Mathf.FloorToInt(_MinSequenceLength + difficulty * _MaxSequenceLength);
+
         GenerateSequence();
         PrintSequence();
-    }
-
-    protected override void AdaptToDifficultyChild(float difficulty) {
-        _SequenceLength = Mathf.FloorToInt(_MinSequenceLength + difficulty * _MaxSequenceLength);
     }
 
     protected override void Update() {

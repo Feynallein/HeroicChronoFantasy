@@ -581,7 +581,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 33.237, y: -211.92}
+  m_AnchoredPosition: {x: 33.23706, y: -211.91998}
   m_SizeDelta: {x: 454.494, y: 122.54}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &83739846
@@ -1075,6 +1075,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _DoNotDestroyGameObjectOnLoad: 0
   _Emitter: {fileID: 147105650}
+  _FadeDuration: 2
 --- !u!114 &147105650
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1090,10 +1091,10 @@ MonoBehaviour:
   CollisionTag: 
   EventReference:
     Guid:
-      Data1: -305874447
-      Data2: 1166369580
-      Data3: 732597398
-      Data4: -789750677
+      Data1: -208310236
+      Data2: 1256010735
+      Data3: 1977891490
+      Data4: 808705790
     Path: event:/Music/Music
   Event: 
   PlayEvent: 0
@@ -1386,7 +1387,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &208503063
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5573,7 +5574,7 @@ MonoBehaviour:
         Data3: -1496802143
         Data4: -1958507346
       Path: event:/SFX/MinigameLose
-  _MaxWaveDifficultuIncrease: 24
+  _MaxWaveDifficultyIncrease: 24
   _ClassEffectOnDifficulty: 2
 --- !u!1 &424262367
 GameObject:
@@ -6002,6 +6003,7 @@ GameObject:
   m_Component:
   - component: {fileID: 496843007}
   - component: {fileID: 496843008}
+  - component: {fileID: 496843009}
   m_Layer: 0
   m_Name: HudManager
   m_TagString: Untagged
@@ -6055,7 +6057,38 @@ MonoBehaviour:
   - {fileID: 1816723}
   - {fileID: 1276274941}
   _HasHealth: {fileID: 1051620584, guid: 179fbdbcd30869a448ceda73f8ba5bac, type: 3}
+  _Emitter: {fileID: 496843009}
   _HasNoHealth: {fileID: -1444920194, guid: 179fbdbcd30869a448ceda73f8ba5bac, type: 3}
+--- !u!114 &496843009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 496843006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: 1880030074
+      Data2: 1166107545
+      Data3: 899214985
+      Data4: -96627513
+    Path: event:/UI/Click
+  Event: 
+  PlayEvent: 0
+  StopEvent: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1 &506894152
 GameObject:
   m_ObjectHideFlags: 0
@@ -7060,6 +7093,7 @@ GameObject:
   m_Component:
   - component: {fileID: 904179702}
   - component: {fileID: 904179703}
+  - component: {fileID: 904179704}
   m_Layer: 0
   m_Name: MenuManager
   m_TagString: Untagged
@@ -7100,6 +7134,37 @@ MonoBehaviour:
   _GameOverPanel: {fileID: 1416727342}
   _CreditsPanel: {fileID: 549288161}
   _GameOverStats: {fileID: 378359158}
+  _Emitter: {fileID: 904179704}
+--- !u!114 &904179704
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 904179701}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: 1880030074
+      Data2: 1166107545
+      Data3: 899214985
+      Data4: -96627513
+    Path: event:/UI/Click
+  Event: 
+  PlayEvent: 0
+  StopEvent: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -11116,6 +11181,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1420839753}
   - component: {fileID: 1420839752}
+  - component: {fileID: 1420839754}
   m_Layer: 0
   m_Name: MouseSpam
   m_TagString: Untagged
@@ -11137,6 +11203,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _MaxDuration: 5
   _MinDuration: 20
+  _Emitter: {fileID: 1420839754}
   _MaxNumberOfClickNeeded: 10
   _MinNumberOfClickNeeded: 15
   _ClickCounter: {fileID: 789923017}
@@ -11164,6 +11231,36 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1420839754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1420839750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: 1880030074
+      Data2: 1166107545
+      Data3: 899214985
+      Data4: -96627513
+    Path: event:/UI/Click
+  Event: 
+  PlayEvent: 0
+  StopEvent: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1 &1435125075
 GameObject:
   m_ObjectHideFlags: 0
@@ -11725,14 +11822,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _MaxDuration: 10
   _MinDuration: 15
+  _Emitter: {fileID: 1554870303}
   _ArrowPrefab: {fileID: 7460418904073212773, guid: 96db91d43e009d343be82b5eed9bdfb3, type: 3}
   _MaxSequenceLength: 20
   _MinSequenceLength: 10
   _MaxArrowInLine: 4
-  _YOffset: 100
-  _XOffset: 100
+  _YOffset: 50
+  _XOffset: 50
   _GoodColor: {r: 1.0775075, g: 0, b: 2.572549, a: 1}
-  _Emitter: {fileID: 1554870303}
 --- !u!114 &1554870303
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14049,6 +14146,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _MaxDuration: 10
   _MinDuration: 15
+  _Emitter: {fileID: 2129859320}
   _ButtonToSpawn: {fileID: 8654901443986145917, guid: ea4b8db59cb6d9e448310702ec41580c, type: 3}
   _TopLeftBound: {fileID: 506894153}
   _BottomRightBound: {fileID: 1477352263}
@@ -14056,7 +14154,6 @@ MonoBehaviour:
   _MinNumberOfButtonToSpawn: 5
   _TimeBetweenSpawns: 0.5
   _MaxScaleFactor: 2.5
-  _Emitter: {fileID: 2129859320}
 --- !u!114 &2129859320
 MonoBehaviour:
   m_ObjectHideFlags: 0

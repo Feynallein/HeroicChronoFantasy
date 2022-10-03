@@ -5,6 +5,8 @@
     using UnityEngine.UI;
     using SDD.Events;
     using TMPro;
+    using FMODUnity;
+    using EventManager = SDD.Events.EventManager;
 
     public class HudManager : Manager<HudManager> {
         #region Variables
@@ -19,6 +21,7 @@
         [SerializeField] TextMeshProUGUI _CurrentClass;
         [SerializeField] List<GameObject> _Lives;
         [SerializeField] Sprite _HasHealth;
+        [SerializeField] private StudioEventEmitter _Emitter;
         [SerializeField] Sprite _HasNoHealth;
 
         List<string> _HUDSkillsBaseText = new();
@@ -109,14 +112,17 @@
         #endregion
 
         public void StrButtonPressed() {
+            _Emitter.Play();
             GameManager.Instance.IncreaseSkill("str");
         }
 
         public void IntButtonPressed() {
+            _Emitter.Play();
             GameManager.Instance.IncreaseSkill("int");
         }
 
         public void DexButtonPressed() {
+            _Emitter.Play();
             GameManager.Instance.IncreaseSkill("dex");
         }
     }

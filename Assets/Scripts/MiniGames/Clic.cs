@@ -12,22 +12,18 @@ public class Clic : MiniGame {
     [SerializeField] private int _MinNumberOfButtonToSpawn;
     [SerializeField] private float _TimeBetweenSpawns;
     [SerializeField] private float _MaxScaleFactor;
-    [SerializeField] private StudioEventEmitter _Emitter;
 
     private List<GameObject> _SpawnedButton = new();
     private float _TimeBeforeSpawn = 0;
     private int _NumberOfButtonSpawned = 0;
     private int _NumberOfButtonToSpawn;
 
-    protected override void OnEnable() {
-        base.OnEnable();
+    protected override void AdaptToDifficultyChild(float difficulty) {
         _TimeBeforeSpawn = 0;
         _NumberOfButtonSpawned = 0;
         _SpawnedButton.ForEach(x => Destroy(x));
         _SpawnedButton.Clear();
-    }
 
-    protected override void AdaptToDifficultyChild(float difficulty) {
         _NumberOfButtonToSpawn = Mathf.FloorToInt(_MinNumberOfButtonToSpawn + difficulty * _MaxNumberOfButtonToSpawn);
     }
 
