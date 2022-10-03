@@ -9628,10 +9628,10 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'A Game by Feynallein & DeadUnicorn
 
-    Music by NoSeed
+    Music by NoSeed & DeadUnicorn
 
-    Font: Alagard
-    (found in DaFont)'
+    Font:
+    Alagard (found in DaFont)'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dcc34b257f7730445a29eb932812aad8, type: 2}
   m_sharedMaterial: {fileID: 5883789563931045533, guid: dcc34b257f7730445a29eb932812aad8, type: 2}

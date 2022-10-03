@@ -90,5 +90,6 @@ public class LevelManager : Manager<LevelManager> {
 
     protected override void GameMenu(GameMenuEvent e) {
         _Start = false;
+        _Spawners.ForEach(spawner => spawner.Despawn());    
     }
 }

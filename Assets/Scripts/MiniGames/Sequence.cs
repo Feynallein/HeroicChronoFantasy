@@ -80,7 +80,7 @@ public class Sequence : MiniGame {
     }
 
     private void PrintSequence() {
-        int y = ((_SequenceLength/_MaxArrowInLine)/2) - 2;
+        int y = -((_SequenceLength/_MaxArrowInLine)/2);
         int initialX = -(_MaxArrowInLine / 2);
         int x = initialX;
         for(int i = 0; i < _SequenceLength; i++) {
