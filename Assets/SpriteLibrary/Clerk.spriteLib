@@ -1,0 +1,78 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &1
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5e6fedc2472449cead18ef23b5cb30d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Library:
+  - m_Name: Idle
+    m_Hash: 2081823275
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: Vagabond-Sheet_0
+      m_Hash: -18456125
+      m_Sprite: {fileID: -1167606715, guid: b6a1cb9e10477b947ab1a5a4913845d6, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1167606715, guid: b6a1cb9e10477b947ab1a5a4913845d6, type: 3}
+    m_FromMain: 0
+    m_EntryOverrideCount: 1
+  - m_Name: Moving
+    m_Hash: 949806512
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: Vagabond-Sheet_0
+      m_Hash: -18456125
+      m_Sprite: {fileID: -1167606715, guid: b6a1cb9e10477b947ab1a5a4913845d6, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1167606715, guid: b6a1cb9e10477b947ab1a5a4913845d6, type: 3}
+    - m_Name: Vagabond-Sheet_1
+      m_Hash: -1981722283
+      m_Sprite: {fileID: -1319204542, guid: b6a1cb9e10477b947ab1a5a4913845d6, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1319204542, guid: b6a1cb9e10477b947ab1a5a4913845d6, type: 3}
+    - m_Name: Vagabond-Sheet_2
+      m_Hash: 283640047
+      m_Sprite: {fileID: -552401104, guid: b6a1cb9e10477b947ab1a5a4913845d6, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -552401104, guid: b6a1cb9e10477b947ab1a5a4913845d6, type: 3}
+    - m_Name: Vagabond-Sheet_3
+      m_Hash: 1743728761
+      m_Sprite: {fileID: 2095834615, guid: b6a1cb9e10477b947ab1a5a4913845d6, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 2095834615, guid: b6a1cb9e10477b947ab1a5a4913845d6, type: 3}
+    - m_Name: Vagabond-Sheet_4
+      m_Hash: -108288550
+      m_Sprite: {fileID: -635791510, guid: b6a1cb9e10477b947ab1a5a4913845d6, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -635791510, guid: b6a1cb9e10477b947ab1a5a4913845d6, type: 3}
+    - m_Name: Vagabond-Sheet_5
+      m_Hash: -1903389364
+      m_Sprite: {fileID: -1714521456, guid: b6a1cb9e10477b947ab1a5a4913845d6, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1714521456, guid: b6a1cb9e10477b947ab1a5a4913845d6, type: 3}
+    - m_Name: Vagabond-Sheet_6
+      m_Hash: 394642678
+      m_Sprite: {fileID: 2141172230, guid: b6a1cb9e10477b947ab1a5a4913845d6, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 2141172230, guid: b6a1cb9e10477b947ab1a5a4913845d6, type: 3}
+    - m_Name: Vagabond-Sheet_7
+      m_Hash: 1619194976
+      m_Sprite: {fileID: 509489013, guid: b6a1cb9e10477b947ab1a5a4913845d6, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 509489013, guid: b6a1cb9e10477b947ab1a5a4913845d6, type: 3}
+    - m_Name: Vagabond-Sheet_8
+      m_Hash: -264377871
+      m_Sprite: {fileID: -688107317, guid: b6a1cb9e10477b947ab1a5a4913845d6, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -688107317, guid: b6a1cb9e10477b947ab1a5a4913845d6, type: 3}
+    m_FromMain: 0
+    m_EntryOverrideCount: 9
+  m_PrimaryLibraryGUID: 

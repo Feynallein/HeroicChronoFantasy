@@ -1,10 +1,12 @@
-namespace EventsManager {
+    namespace EventsManager {
     using System.Collections;
     using UnityEngine;
     using System.Collections.Generic;
     using SDD.Events;
     using UnityEngine.InputSystem;
     using System.Linq;
+    using FMODUnity;
+    using EventManager = SDD.Events.EventManager;
 
     public enum GameState { gameMenu, gamePlay, initializingLevel, gamePause, gameOver}
 
@@ -21,6 +23,7 @@ namespace EventsManager {
         #endregion
 
         [SerializeField] private int _MaxHealth;
+        [SerializeField] private StudioEventEmitter _Emitter;
 
         private List<int> _Skills = new() { 0, 0, 0 };
 
@@ -38,9 +41,14 @@ namespace EventsManager {
             _Wave++;
         }
 
+        public int GetSkill(int idx) {
+            return _Skills[idx];
+        }
+
         public void DecrementHealth(int decrement) {
             _Health -= decrement;
             if (_Health <= 0) EventManager.Instance.Raise(new GameOverEvent());
+            else EventManager.Instance.Raise(new GameStatisticsChangedEvent() { eHealth = _Health, eStr = _Skills[0], eInt = _Skills[1], eDex = _Skills[2] });
         }
 
         #region Events' subscription
@@ -76,8 +84,7 @@ namespace EventsManager {
 
         #region Manager implementation
         protected override IEnumerator InitCoroutine() {
-            //Menu();
-            Play();
+            Menu();
             yield break;
         }
 
@@ -91,7 +98,7 @@ namespace EventsManager {
         }
 
         public string GetClass() {
-            int total = _Skills.Sum();
+            int total = GetTotalPoint();
 
             if (total == 0) return Jobs.JobToString(Jobs.ConvertRangeSkillStringToJob("lowlowlow"));
 
@@ -102,6 +109,10 @@ namespace EventsManager {
             string query = ComputeQuery(strPercentage, intPercentage, dexPercentage, total);
 
             return Jobs.JobToString(Jobs.ConvertRangeSkillStringToJob(query));
+        }
+
+        public int GetTotalPoint() {
+            return _Skills.Sum();
         }
 
         private string ComputeQuery(float strPercentage, float intPercentage, float dexPercentage, float total) {
@@ -148,7 +159,8 @@ namespace EventsManager {
                     break;
             }
             EventManager.Instance.Raise(new PointLostEvent());
-            EventManager.Instance.Raise(new GameStatisticsChangedEvent { eStr = _Skills[0], eInt = _Skills[1], eDex = _Skills[2] });
+            EventManager.Instance.Raise(new GameStatisticsChangedEvent { eStr = _Skills[0], eInt = _Skills[1], eDex = _Skills[2], eHealth = _Health });
+            PlayerController.Instance.UpdateSkin(GetClass());
         }
         #endregion
 
@@ -196,7 +208,10 @@ namespace EventsManager {
             SetTimeScale(1);
             _GameState = GameState.gamePlay;
             _Health = _MaxHealth;
-            EventManager.Instance.Raise(new GameStatisticsChangedEvent { eStr = _Skills[0], eInt = _Skills[1], eDex = _Skills[2] });
+            _Skills = new() { 0, 0, 0};
+            _Wave = 0;
+            _CurrentPoints = 0;
+            EventManager.Instance.Raise(new GameStatisticsChangedEvent { eStr = _Skills[0], eInt = _Skills[1], eDex = _Skills[2], eHealth = _Health });
             EventManager.Instance.Raise(new GamePlayEvent());
         }
 
@@ -216,6 +231,7 @@ namespace EventsManager {
 
         public void Over() {
             if (_GameState == GameState.gameOver) return;
+            _Emitter.Play();
             SetTimeScale(0);
             _GameState = GameState.gameOver;
             EventManager.Instance.Raise(new GameOverEvent());

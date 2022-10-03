@@ -3,26 +3,35 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using Redcode.Extensions;
+using FMODUnity;
 
 public class Sequence : MiniGame {
     [SerializeField] private GameObject _ArrowPrefab;
-    [SerializeField] private int _SequenceLength;
+    [SerializeField] private int _MaxSequenceLength;
+    [SerializeField] private int _MinSequenceLength;
     [SerializeField] private int _MaxArrowInLine;
     [SerializeField] private float _YOffset;
     [SerializeField] private float _XOffset;
     [SerializeField, ColorUsage(true, true)] private Color _GoodColor;
+    [SerializeField] private StudioEventEmitter _Emitter;
 
     private List<string> _StringSeq = new();
     private List<GameObject> _ArrowSeq = new();
     private int _Cursor;
+    private int _SequenceLength;
 
     protected override void OnEnable() {
         base.OnEnable();
         _Cursor = 0;
+        _ArrowSeq.ForEach(x => Destroy(x));
         _StringSeq.Clear();
         _ArrowSeq.Clear();
         GenerateSequence();
         PrintSequence();
+    }
+
+    protected override void AdaptToDifficultyChild(float difficulty) {
+        _SequenceLength = Mathf.FloorToInt(_MinSequenceLength + difficulty * _MaxSequenceLength);
     }
 
     protected override void Update() {
@@ -43,6 +52,7 @@ public class Sequence : MiniGame {
     private void GoodInput() {
         _ArrowSeq[_Cursor].GetComponent<Image>().color = _GoodColor;
         _Cursor++;
+        _Emitter.Play();
         if (_Cursor == _SequenceLength) LevelManager.Instance.MiniGameCallback(true);
     }
 
@@ -73,13 +83,18 @@ public class Sequence : MiniGame {
     }
 
     private void PrintSequence() {
-        int y = -1;
+        int y = ((_SequenceLength/_MaxArrowInLine)/2) - 2;
+        int initialX = -(_MaxArrowInLine / 2);
+        int x = initialX;
         for(int i = 0; i < _SequenceLength; i++) {
-            int x = i % _MaxArrowInLine;
-            if (x == 0) y++;
             GameObject go = Instantiate(_ArrowPrefab, transform.position.WithXY(transform.position.x + x * _XOffset, transform.position.y - y * _YOffset), transform.rotation, transform);
             go.transform.Rotate(go.transform.forward, SeqStrToAngle(_StringSeq[i]));
             _ArrowSeq.Add(go);
+            x++;
+            if(x == _MaxArrowInLine/2) {
+                x = initialX;
+                y++;
+            }
         }
     }
 }

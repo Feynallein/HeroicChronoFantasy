@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class MiniGame : MonoBehaviour {
-    [SerializeField] private float _Duration;
+public abstract class MiniGame : MonoBehaviour {
+    [SerializeField] protected float _MaxDuration;
+    [SerializeField] protected float _MinDuration;
 
-    private float _ElapsedTime;
+    protected float _Duration;
+
+    protected float _ElapsedTime;
 
     protected virtual void OnEnable() {
         _ElapsedTime = 0;
@@ -17,4 +19,15 @@ public class MiniGame : MonoBehaviour {
             LevelManager.Instance.MiniGameCallback(false);
         } else _ElapsedTime += Time.unscaledDeltaTime;
     }
+
+    public void SetDifficulty(float difficulty) {
+        AdaptToDifficulty(difficulty);
+    }
+
+    private void AdaptToDifficulty(float difficutly) {
+        _Duration = _MinDuration + difficutly * _MaxDuration;
+        AdaptToDifficulty(difficutly);
+    }
+
+    protected abstract void AdaptToDifficultyChild(float difficulty);
 }

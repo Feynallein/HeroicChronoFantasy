@@ -8,12 +8,15 @@ using UnityEngine.AI;
 using UnityEngine.InputSystem;
 using SDD.Events;
 using UnityEngine.UIElements;
+using FMODUnity;
 
 public class Enemy : MonoBehaviour {
     [SerializeField] private float _MinDistance;
     [SerializeField] private float _MinWait;
     [SerializeField] private float _MaxWait;
     [SerializeField] private Animator _Animator;
+    [SerializeField] private StudioEventEmitter _Emitter;
+    [SerializeField] private float _DistanceToPlayerSound;
 
     private NavMeshAgent _Agent;
     private bool _DestinationReached = false;
@@ -40,14 +43,18 @@ public class Enemy : MonoBehaviour {
         if (inputDirection != Vector2.zero) {
             float angle = Mathf.Atan2(inputDirection.y, inputDirection.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            if(Vector3.Distance(transform.position, PlayerController.Instance.transform.position) < _DistanceToPlayerSound) {
+                if (!_Emitter.IsPlaying()) _Emitter.Play();
+            } else _Emitter.Stop();
         }
-        _Animator.SetBool("IsMoving", inputDirection != Vector2.zero);
 
+        _Animator.SetBool("IsMoving", inputDirection != Vector2.zero);
         if (!_Agent.pathPending && !_DestinationReached) {
             if (_Agent.remainingDistance <= _Agent.stoppingDistance) {
                 if (!_Agent.hasPath || _Agent.velocity.sqrMagnitude == 0f) {
                     _DestinationReached = true;
                     _WaitingTime = Random.Range(_MinWait, _MaxWait);
+                    _Emitter.Stop();
                 }
             }
         }
@@ -64,6 +71,10 @@ public class Enemy : MonoBehaviour {
         }
 
         if(_DestinationReached) _ElapsedTime += Time.deltaTime;
+    }
+
+    private void OnDestroy() {
+        _Emitter.Stop();
     }
 
     private void ChangeTarget(Vector3 target) {

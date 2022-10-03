@@ -4,6 +4,7 @@
     using UnityEngine;
     using UnityEngine.UI;
     using SDD.Events;
+    using TMPro;
 
     public class HudManager : Manager<HudManager> {
         #region Variables
@@ -11,11 +12,14 @@
         [SerializeField] GameObject _HUD;
         #endregion
 
-        [SerializeField] List<Text> _HUDSkills = new();
+        [SerializeField] List<TextMeshProUGUI> _HUDSkills = new();
         [SerializeField] List<GameObject> _HUDSkillsButtons = new();
-        [SerializeField] Text _CurrentPointsHUD;
+        [SerializeField] TextMeshProUGUI _CurrentPointsHUD;
         [SerializeField] GameObject _LeftPanel;
-        [SerializeField] Text _CurrentClass;
+        [SerializeField] TextMeshProUGUI _CurrentClass;
+        [SerializeField] List<GameObject> _Lives;
+        [SerializeField] Sprite _HasHealth;
+        [SerializeField] Sprite _HasNoHealth;
 
         List<string> _HUDSkillsBaseText = new();
 
@@ -43,11 +47,11 @@
         }
 
         private void ShowButtons(bool value) {
-            _HUDSkillsButtons.ForEach(button => button.SetActive(value));
+            _HUDSkillsButtons.ForEach(button => button.GetComponent<Button>().interactable = value);
         }
 
         private void UpdateCurrentPointsHUD() {
-            _CurrentPointsHUD.text = "Points Available: " + GameManager.Instance.CurrentPoints;
+            _CurrentPointsHUD.text = "Points Available:\n" + GameManager.Instance.CurrentPoints;
             if (GameManager.Instance.CurrentPoints == 0) ShowButtons(false);
             else ShowButtons(true);
         }
@@ -61,6 +65,12 @@
         private void UpdateTexts(List<int> skills) {
             for (int i = 0; i < _HUDSkills.Count; i++) {
                 _HUDSkills[i].text = _HUDSkillsBaseText[i] + skills[i];
+            }
+        }
+
+        private void UpdateHealth(int newHealth) {
+            for(int i = 0; i < _Lives.Count; i++) {
+                _Lives[i].GetComponent<Image>().sprite = i < newHealth ? _HasHealth : _HasNoHealth;
             }
         }
 
@@ -84,6 +94,7 @@
 
         protected override void GameStatisticsChanged(GameStatisticsChangedEvent e) {
             UpdateTexts(new List<int>() { e.eStr, e.eInt, e.eDex });
+            UpdateHealth(e.eHealth);
             UpdateCurrentPointsHUD();
             UpdateClass();
         }
