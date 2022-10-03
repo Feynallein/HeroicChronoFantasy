@@ -5455,7 +5455,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: cbef3f3e9ba2c4143aea8af2e4be80fe, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2d69844f142bf9344ba1f2d7ad2ca77d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -9563,7 +9563,10 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'A Game by Feynallein & DeadUnicorn
 
-    Music by NoSeed'
+    Music by NoSeed
+
+    Font: Alagard
+    (found in DaFont)'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dcc34b257f7730445a29eb932812aad8, type: 2}
   m_sharedMaterial: {fileID: 5883789563931045533, guid: dcc34b257f7730445a29eb932812aad8, type: 2}

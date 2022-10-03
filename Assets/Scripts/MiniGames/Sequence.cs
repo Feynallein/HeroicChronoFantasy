@@ -74,10 +74,10 @@ public class Sequence : MiniGame {
 
     private float SeqStrToAngle(string str) {
         return str switch {
-            "left" => -90,
-            "up"  => 180,
-            "right"  => 90,
-            "down"  => 0,
+            "left" => 180,
+            "up"  => 90,
+            "right"  => 0,
+            "down"  => -90,
             _ => 0,
         };
     }
