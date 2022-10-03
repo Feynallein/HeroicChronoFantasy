@@ -19,6 +19,9 @@ namespace EventsManager {
         [Tooltip("Panel displayed when game over")]
         [SerializeField] GameObject _GameOverPanel;
 
+        [Tooltip("Panel displayed for credits")]
+        [SerializeField] GameObject _CreditsPanel;
+
         [SerializeField] private TextMeshProUGUI _GameOverStats;
 
         List<GameObject> _AllPanels;
@@ -45,6 +48,7 @@ namespace EventsManager {
                 _MainMenuPanel,
                 _PausePanel,
                 _GameOverPanel,
+                _CreditsPanel,
             };
         }
 
@@ -74,6 +78,10 @@ namespace EventsManager {
 
         public void MainMenuButtonHasBeenClicked() {
             EventManager.Instance.Raise(new MainMenuButtonClickedEvent());
+        }
+        
+        public void CreditButtonHasBeenClicked() {
+            OpenPanel(_CreditsPanel);
         }
 
         public void ReturnToMainMenuFromMenu() {
