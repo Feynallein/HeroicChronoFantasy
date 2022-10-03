@@ -13,7 +13,7 @@ public class Jobs : MonoBehaviour {
         rogue,
 
         paladin,
-        samourai,
+        samurai,
 
         battlemage,
         bard,
@@ -38,7 +38,7 @@ public class Jobs : MonoBehaviour {
             "lowlowhigh" => rogue,
 
             "highmedlow" => paladin,
-            "highlowmed" => samourai,
+            "highlowmed" => samurai,
 
             "medhighlow" => battlemage,
             "lowhighmed" => bard,
@@ -64,7 +64,7 @@ public class Jobs : MonoBehaviour {
             rogue => "Rogue",
 
             paladin => "Paladin",
-            samourai => "Samouraï",
+            samurai => "Samurai",
 
             battlemage => "Battlemage",
             bard => "Bard",
