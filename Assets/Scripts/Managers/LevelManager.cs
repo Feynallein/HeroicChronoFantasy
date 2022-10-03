@@ -57,7 +57,7 @@ public class LevelManager : Manager<LevelManager> {
     public void MiniGameTime() {
         int rand = Random.Range(0, _Minigames.Count);
         _Minigames[rand].SetActive(true);
-        float difficulty = GameManager.Instance.Wave / (_MaxWaveDifficultuIncrease - (GameManager.Instance.GetSkill(rand)/2));
+        float difficulty = GameManager.Instance.Wave / (_MaxWaveDifficultuIncrease + (GameManager.Instance.GetTotalPoint()/3) - (GameManager.Instance.GetSkill(rand)/2));
         _Minigames[rand].GetComponent<MiniGame>().SetDifficulty(difficulty);
         _Background.SetActive(true);
         GameManager.Instance.SetTimeScale(0);
